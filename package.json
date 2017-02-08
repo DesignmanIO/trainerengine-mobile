@@ -1,0 +1,21 @@
+{
+  "name": "trainerengine-mobile",
+  "version": "0.0.0",
+  "description": "Hello Exponent!",
+  "author": null,
+  "private": true,
+  "main": "main.js",
+  "dependencies": {
+    "@exponent/vector-icons": "~4.0.0",
+    "@shoutem/theme": "^0.8.10",
+    "@shoutem/ui": "^0.10.8",
+    "exponent": "^13.1.0",
+    "lodash": "^4.17.4",
+    "react": "~15.4.0",
+    "react-native": "https://github.com/exponent/react-native/archive/sdk-13.0.3.tar.gz",
+    "react-native-gifted-chat": "^0.1.1",
+    "react-native-meteor": "^1.0.3",
+    "react-native-swipe-out": "^2.0.14",
+    "react-navigation": "git+https://github.com/react-community/react-navigation.git"
+  }
+}
