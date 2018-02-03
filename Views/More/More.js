@@ -1,36 +1,29 @@
 import React from 'react';
-import {View, Row, ListView} from '@shoutem/ui';
+import {View, Row, TouchableOpacity} from '@shoutem/ui';
 import {Text} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import {navigationOptions} from '../../Config/Theme';
-
-const options = [
-  {title: "Log out"},
-];
+import {auth} from '../../api';
 
 const More = (props) => {
   return (
-    <ListView
-      data={options}
-      renderRow={(row) => {
-        return (
-          <Row>
-            <Text>{row.title}</Text>
-          </Row>
-        );
-      }}/>
+    <View>
+      <TouchableOpacity  onPress={() => auth.logout()}>
+      <Row>
+        <Text>Log Out</Text>
+      </Row>
+      </TouchableOpacity>
+    </View>
   )
 };
 
 More.navigationOptions = {
   ...navigationOptions,
   title: "More",
-  tabBar: {
-    icon: ({tintColor}) => {
-    return <Icon name="ios-more-outline" size={20} style={{color: tintColor}} />;
-    },
-  }
+  tabBarIcon: ({tintColor}) => (
+    <Icon name="ios-more-outline" size={20} color={tintColor} />
+  ),
 };
 
 export default More;

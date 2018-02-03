@@ -1,6 +1,7 @@
-import React, {PropTypes, Component} from 'react';
+import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import {Row, View} from '@shoutem/ui';
-import Swipeout from 'react-native-swipe-out';
+import Swipeout from 'react-native-swipeout';
 import {Text} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {connectStyle} from '@shoutem/theme';

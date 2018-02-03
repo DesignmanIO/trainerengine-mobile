@@ -10,11 +10,9 @@ class Tasks extends Component{
   static navigationOptions = {
     ...navigationOptions,
     title: "Tasks",
-    tabBar: {
-      icon: ({tintColor}) => {
-        return <Icon name="ios-checkmark-circle-outline" size={20} style={{color: tintColor}}/>;
-      }
-    }
+    tabBarIcon: ({tintColor}) => (
+      <Icon name="ios-checkmark-circle-outline" size={20} color={tintColor}/>
+    ),
   }
 
   constructor(props) {

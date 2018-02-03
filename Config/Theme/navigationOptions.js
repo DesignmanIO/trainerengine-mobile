@@ -1,10 +1,8 @@
 import colors from './colors';
 
 const navigationOptions = {
-  header: {
-    style: {
-      backgroundColor: colors.white,
-    }
+  headerStyle: {
+    backgroundColor: colors.white,
   }
 };
 

@@ -9,13 +9,9 @@ class Messages extends Component {
       static navigationOptions = {
         ...navigationOptions,
         title: "Messages",
-          tabBar: {
-              icon: ({tintColor}) => {
-                  return (
-                    <Icon name = "ios-chatbubbles-outline" size = {20} style={{color: tintColor}}/>
-                  );
-              },
-          }
+        tabBarIcon: ({tintColor}) =>  (
+          <Icon name="ios-chatbubbles-outline" size={20} color={tintColor}/>
+        ),
       }
 
     constructor(props) {
@@ -56,7 +52,7 @@ class Messages extends Component {
             onSend = {this.onSend}
             user = {{_id: 1,}}
             renderBubble = {(props) => {
-              console.log('props', props);
+              // console.log('props', props);
               return (
                 <Bubble {...props} wrapperStyle={style.messageWrapper}/>
               );

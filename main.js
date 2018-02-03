@@ -1,39 +1,37 @@
-import Exponent from 'exponent';
+import Expo from 'expo';
 import React, {Component} from 'react';
 import {Text,View,} from '@shoutem/ui';
 import {StyleProvider} from '@shoutem/theme';
-import {StackNavigator, TabNavigator} from 'react-navigation'
+import Meteor from 'react-native-meteor';
+import {Provider} from 'react-redux'
+import {addNavigationHelpers} from 'react-navigation';
+import {addListener} from './redux/navState';
 
 import Theme, {colors} from './Config/Theme';
-import Messages from './Views/Messages';
-import Tasks from './Views/Tasks';
-import More from './Views/More';
+import RootNavigator from './navigators/RootNavigator';
+import Store from './redux';
 
-const xComponent = (props) => <View><Text>Test</Text></View>;
-const zComponent = (props) => <View><Text>Tester</Text></View>;
+Meteor.connect('wss://app.trainerengine.com/websocket');
 
-const MainNavigation = TabNavigator ({
-  Tasks: {screen: Tasks},
-  Messages: {screen: Messages},
-  More: {screen: More},
-},{
-  swipeEnabled: true,
-  animationEnabled: true,
-  tabBarOptions: {
-      activeTintColor: colors.purple,
+const ReduxNavigator = connect(({navState})=>navState)(<RootNavigator navigation={addNavigationHelpers({
+  dispatch: props.dispatch,
+  state: props.navState,
+  addListener,
+})}/>)
+
+class App extends Component {
+  componentWillMount() {
+    
   }
-});
-
-const RootNavigation = StackNavigator({
-  Home: {screen: MainNavigation},
-})
-
-const App = (props) => {
-  return (
-    <StyleProvider style={Theme}>
-      <RootNavigation />
-    </StyleProvider>
-  )
+  render() {
+    return (
+      <Provider store={Store}>
+        <StyleProvider style={Theme}>
+        <RootNavigator />
+        </StyleProvider>
+      </Provider>
+    )
+  }
 }
 
-Exponent.registerRootComponent(App);
+Expo.registerRootComponent(App);
