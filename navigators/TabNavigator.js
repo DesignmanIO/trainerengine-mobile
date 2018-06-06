@@ -1,11 +1,11 @@
-import { createTabNavigator } from 'react-navigation';
+import { createBottomTabNavigator } from 'react-navigation';
 
 import Messages from '../Views/Messages';
 import Tasks from '../Views/Tasks';
 import More from '../Views/More';
 import { colors } from '../Config/Theme';
 
-const MainNavigator = createTabNavigator(
+const MainNavigator = createBottomTabNavigator(
   {
     Tasks: { screen: Tasks },
     Messages: { screen: Messages },

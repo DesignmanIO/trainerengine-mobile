@@ -1,19 +1,22 @@
 {
+  "plugins": [
+    [
+      "babel-plugin-root-import"
+    ]
+  ],
   "presets": [
     "babel-preset-expo"
   ],
-  "plugins": [
-    "transform-react-jsx-source",
-    [
-      "module-resolver",
-      {
-        "root": [
-          "./"
-        ],
-        "alias": {
-          "~": "./"
-        }
-      }
-    ]
-  ]
+  "env": {
+    "development": {
+      "plugins": [
+        "transform-react-jsx-source"
+      ]
+    },
+    "production": {
+      "plugins": [
+        "babel-plugin-root-import"
+      ]
+    }
+  }
 }

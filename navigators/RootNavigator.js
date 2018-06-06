@@ -14,7 +14,7 @@ const RootNavigator = createSwitchNavigator(
   {
     initialRouteName: 'AuthLoading',
     navigationOptions: {},
-    mode: 'card',
+    mode: 'card'
   },
 );
 

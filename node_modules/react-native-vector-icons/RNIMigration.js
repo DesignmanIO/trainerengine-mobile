@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Foundation from 'react-native-vector-icons/Foundation';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -17,11 +18,11 @@ const ICON_SET_MAP = {
 
 // This is a composition is a drop in replacement for users migrating from the
 // react-native-icons module. Please don't use this component for new apps/views.
-export default class Icon extends React.Component {
+export default class Icon extends PureComponent {
   static propTypes = {
-    name: React.PropTypes.string.isRequired,
-    size: React.PropTypes.number,
-    color: React.PropTypes.string,
+    name: PropTypes.string.isRequired,
+    size: PropTypes.number,
+    color: PropTypes.string,
   };
 
   setNativeProps(nativeProps) {
@@ -32,7 +33,7 @@ export default class Icon extends React.Component {
 
   iconRef = null;
 
-  handleComponentRef = (ref) => {
+  handleComponentRef = ref => {
     this.iconRef = ref;
   };
 

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import PropTypes from 'prop-types';
+import PropTypes from 'proptypes';
 import {Row, View} from '@shoutem/ui';
 import Swipeout from 'react-native-swipeout';
 import {Text} from 'react-native';

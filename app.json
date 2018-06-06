@@ -1,41 +1,27 @@
 {
-  "expo":{
-    "name": "TrainerEngine",
-    "description": "An empty new project",
+  "expo": {
+    "name": "trainerengine-mobile",
+    "description": "This project is really great.",
     "slug": "trainerengine-mobile",
     "privacy": "public",
-    "sdkVersion": "27.0.2",
-    "version": "0.1.0",
+    "sdkVersion": "27.0.0",
+    "platforms": ["ios", "android"],
+    "version": "1.0.0",
     "orientation": "portrait",
-    "primaryColor": "#cccccc",
-    "icon": "https://trainerengine.com/wp-content/uploads/2017/02/AppIcon_512.png",
-    "loading": {
-      "icon": "https://trainerengine.com/wp-content/uploads/2017/02/AppIcon_512.png",
-      "hideExponentText": true
+    "icon": "./assets/images/TrainerEngineLogoV3SQ500.png",
+    "splash": {
+      "image": "./assets/images/TrainerEngineLogoV3SQ500.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
     },
-    "packagerOpts": {
-      "assetExts": ["ttf", "mp4"]
+    "updates": {
+      "fallbackToCacheTimeout": 0
     },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "com.trainerengine.app",
-      "config": {
-        "usesNonExemptEncryption": false,
-        "fabric": {
-          "apiKey": "b6372cae8fa416969c205c9f349bb43e48acfb50",
-          "buildSecret": "389fa9dd44b855787ca0b4bd7687984554489e0f4aebca7b7db7d988804f2e25"
-        }
-      }
-    },
-    "android": {
-      "package": "com.trainerengine.app",
-      "config": {
-        "fabric": {
-          "apiKey": "b6372cae8fa416969c205c9f349bb43e48acfb50",
-          "buildSecret": "389fa9dd44b855787ca0b4bd7687984554489e0f4aebca7b7db7d988804f2e25"
-        }
-      }
-    },
-    "scheme": "trainerengine"
-  } 
+      "supportsTablet": true
+    }
+  }
 }

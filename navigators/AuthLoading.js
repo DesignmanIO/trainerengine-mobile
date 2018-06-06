@@ -18,17 +18,15 @@ class AuthLoading extends Component {
 
   navigateNext() {
     const { navigation, userState } = this.props;
-
-    navigation.navigate(userState.authSettings && userState.authToken
-      ? 'AppNavigator'
-      : 'AuthNavigator');
+    console.log(userState);
+    navigation.navigate(userState.authToken ? 'AppNavigator' : 'AuthNavigator');
     // navigation.navigate('Auth');
   }
 
   render() {
     return (
       <View styleName="flexible vertical h-center v-center">
-        <Spinner style={{ color: 'white', size: 'large' }} />
+        <Spinner style={{ color: 'black', size: 'large' }} />
       </View>
     );
   }
