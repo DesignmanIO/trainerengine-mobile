@@ -4,7 +4,7 @@
     "description": "An empty new project",
     "slug": "trainerengine-mobile",
     "privacy": "public",
-    "sdkVersion": "25.0.0",
+    "sdkVersion": "27.0.2",
     "version": "0.1.0",
     "orientation": "portrait",
     "primaryColor": "#cccccc",

@@ -1,9 +1,9 @@
 import {
   BackAndroid as DeprecatedBackAndroid,
   BackHandler as ModernBackHandler,
-  Linking,
+  MaskedViewIOS,
 } from 'react-native';
 
 const BackHandler = ModernBackHandler || DeprecatedBackAndroid;
 
-export { BackHandler, Linking };
+export { BackHandler, MaskedViewIOS };

@@ -5,7 +5,7 @@
 
 `react-native-svg` is built to provide a SVG interface to react native on both iOS and Android.
 
-[Check out the demo](https://getexponent.com/@rncommunity/react-native-svg-examples).
+[Check out the demo](https://expo.io/@msand/svgexample) [Source](https://github.com/peterlazar1993/react-native-svg-example/commit/8944e14d2dd1b36cc41fe089ac547cdc9149c111).
 
 ## Features
 
@@ -23,9 +23,9 @@
     ```bash
     npm install react-native-svg --save
     ```
-    
+
     # NOTICE:
-    
+
     - react-native-svg >= 3.2.0 only supports react-native >= 0.29.0
     - react-native-svg >= 4.2.0 only supports react-native >= 0.32.0
     - react-native-svg >= 4.3.0 only supports react-native >= 0.33.0
@@ -43,12 +43,14 @@
     react-native link react-native-svg
     ```
 
-    Or use `rnpm` instead:
+    A bug in react-native currently links the tvOS library into the iOS project as well.
 
-    ```bash
-    rnpm link react-native-svg
-    ```
-    
+    Until the fix is released:
+    https://github.com/facebook/react-native/issues/13783
+    https://github.com/facebook/react-native/commit/a63fd378a47173cc9f750e9980f18dc12dd7ea51
+
+    Follow the instructions here: https://github.com/react-native-community/react-native-svg/issues/544
+
 #### Manual
 
 ##### Android
@@ -61,7 +63,7 @@
 	include ':react-native-svg'
 	project(':react-native-svg').projectDir = new File(rootProject.projectDir, 	'../node_modules/react-native-svg/android')
 	```
-    
+
 3. Insert the following lines inside the dependencies block in `android/app/build.gradle`:
 
 	```
@@ -71,7 +73,25 @@
 4. Open up `android/app/src/main/java/[...]/MainApplication.java
   - Add `import com.horcrux.svg.SvgPackage;` to the imports at the top of the file
   - Add `new SvgPackage()` to the list returned by the `getPackages()` method. Add a comma to the previous item if there's already something there.
-  
+
+##### iOS
+
+[Manual linking](http://facebook.github.io/react-native/docs/linking-libraries-ios.html#manual-linking)
+
+To install react-native-svg on iOS visit the link referenced above or do the following:
+
+1. Open your project in XCode and drag the RNSVG.xcodeproj file (located in .../node_modules/react-native-svg/ios) into the Libraries directory shown in XCode.
+2. Expand the RNSVG.xcodeproj file you just added to XCode until you see: libRNSVG.a (located in RNSVG.xcodeproj > Products )
+3. Drag libRNSVG.a into the Link Binary With Libraries section (located in Build Phases which may be found at the top of the XCode window)
+
+###### CocoaPods
+
+Alternatively, you can use [CocoaPods](https://cocoapods.org/) to manage your native (Objective-C and Swift) dependencies:
+
+1. Add RNSVG to your Podfile
+```
+pod 'RNSVG', :path => '../node_modules/react-native-svg'
+```
 
 ### <a name="Usage">Usage</a>
 
@@ -82,6 +102,7 @@ Here's a simple example. To render output like this:
 Use the following code:
 
 ```javascript
+import 'react';
 import Svg,{
     Circle,
     Ellipse,
@@ -138,7 +159,7 @@ Name            | Default    | Description
 ----------------|------------|--------------
 fill            | '#000'     | The fill prop refers to the color inside the shape.
 fillOpacity     | 1          | This prop specifies the opacity of the color or the content the current object is filled with.
-fillRule        | nonzero    | The fillRule prop determines what side of a path is inside a shape, which determines how fill will paint the shape, can be `nonzero` or `evenodd` 
+fillRule        | nonzero    | The fillRule prop determines what side of a path is inside a shape, which determines how fill will paint the shape, can be `nonzero` or `evenodd`
 stroke          | 'none'     | The stroke prop controls how the outline of a shape appears.
 strokeWidth     | 1          | The strokeWidth prop specifies the width of the outline on the current object.
 strokeOpacity   | 1          | The strokeOpacity prop specifies the opacity of the outline on the current object.
@@ -148,7 +169,7 @@ strokeDasharray | []         | The strokeDasharray prop controls the pattern of 
 strokeDashoffset| null       | The strokeDashoffset prop specifies the distance into the dash pattern to start the dash.
 x               | 0          | Translate distance on x-axis.
 y               | 0          | Translate distance on y-axis.
-rotate          | 0          | Rotation degree value on the current object.
+rotation          | 0          | Rotation degree value on the current object.
 scale           | 1          | Scale value on the current object.
 origin          | 0, 0       | Transform origin coordinates for the current object.
 originX         | 0          | Transform originX coordinates for the current object.
@@ -468,7 +489,7 @@ The <G> element is a container used to group other SVG elements. Transformations
     width="200"
 >
     <G
-        rotate="50"
+        rotation="50"
         origin="100, 50"
     >
         <Line
@@ -803,12 +824,11 @@ npm i
 
 
 ### TODO:
-1. Add Native method for elements.
+1. Add Native methods for elements.
 2. Pattern element.
 3. Mask element.
 4. Marker element.
 5. Load Image from URL.
-6. Transform prop support.
 
 ### Known issues:
 1. Unable to apply focus point of RadialGradient on Android.

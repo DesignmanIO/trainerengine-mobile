@@ -1,209 +1,8 @@
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
 	typeof define === 'function' && define.amd ? define(['exports'], factory) :
-	(factory((global.Redux = global.Redux || {})));
+	(factory((global.Redux = {})));
 }(this, (function (exports) { 'use strict';
-
-/** Detect free variable `global` from Node.js. */
-var freeGlobal = typeof global == 'object' && global && global.Object === Object && global;
-
-/** Detect free variable `self`. */
-var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
-
-/** Used as a reference to the global object. */
-var root = freeGlobal || freeSelf || Function('return this')();
-
-/** Built-in value references. */
-var Symbol = root.Symbol;
-
-/** Used for built-in method references. */
-var objectProto$1 = Object.prototype;
-
-/** Used to check objects for own properties. */
-var hasOwnProperty$1 = objectProto$1.hasOwnProperty;
-
-/**
- * Used to resolve the
- * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
- * of values.
- */
-var nativeObjectToString = objectProto$1.toString;
-
-/** Built-in value references. */
-var symToStringTag$1 = Symbol ? Symbol.toStringTag : undefined;
-
-/**
- * A specialized version of `baseGetTag` which ignores `Symbol.toStringTag` values.
- *
- * @private
- * @param {*} value The value to query.
- * @returns {string} Returns the raw `toStringTag`.
- */
-function getRawTag(value) {
-  var isOwn = hasOwnProperty$1.call(value, symToStringTag$1),
-      tag = value[symToStringTag$1];
-
-  try {
-    value[symToStringTag$1] = undefined;
-    var unmasked = true;
-  } catch (e) {}
-
-  var result = nativeObjectToString.call(value);
-  if (unmasked) {
-    if (isOwn) {
-      value[symToStringTag$1] = tag;
-    } else {
-      delete value[symToStringTag$1];
-    }
-  }
-  return result;
-}
-
-/** Used for built-in method references. */
-var objectProto$2 = Object.prototype;
-
-/**
- * Used to resolve the
- * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
- * of values.
- */
-var nativeObjectToString$1 = objectProto$2.toString;
-
-/**
- * Converts `value` to a string using `Object.prototype.toString`.
- *
- * @private
- * @param {*} value The value to convert.
- * @returns {string} Returns the converted string.
- */
-function objectToString(value) {
-  return nativeObjectToString$1.call(value);
-}
-
-/** `Object#toString` result references. */
-var nullTag = '[object Null]';
-var undefinedTag = '[object Undefined]';
-
-/** Built-in value references. */
-var symToStringTag = Symbol ? Symbol.toStringTag : undefined;
-
-/**
- * The base implementation of `getTag` without fallbacks for buggy environments.
- *
- * @private
- * @param {*} value The value to query.
- * @returns {string} Returns the `toStringTag`.
- */
-function baseGetTag(value) {
-  if (value == null) {
-    return value === undefined ? undefinedTag : nullTag;
-  }
-  return (symToStringTag && symToStringTag in Object(value))
-    ? getRawTag(value)
-    : objectToString(value);
-}
-
-/**
- * Creates a unary function that invokes `func` with its argument transformed.
- *
- * @private
- * @param {Function} func The function to wrap.
- * @param {Function} transform The argument transform.
- * @returns {Function} Returns the new function.
- */
-function overArg(func, transform) {
-  return function(arg) {
-    return func(transform(arg));
-  };
-}
-
-/** Built-in value references. */
-var getPrototype = overArg(Object.getPrototypeOf, Object);
-
-/**
- * Checks if `value` is object-like. A value is object-like if it's not `null`
- * and has a `typeof` result of "object".
- *
- * @static
- * @memberOf _
- * @since 4.0.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
- * @example
- *
- * _.isObjectLike({});
- * // => true
- *
- * _.isObjectLike([1, 2, 3]);
- * // => true
- *
- * _.isObjectLike(_.noop);
- * // => false
- *
- * _.isObjectLike(null);
- * // => false
- */
-function isObjectLike(value) {
-  return value != null && typeof value == 'object';
-}
-
-/** `Object#toString` result references. */
-var objectTag = '[object Object]';
-
-/** Used for built-in method references. */
-var funcProto = Function.prototype;
-var objectProto = Object.prototype;
-
-/** Used to resolve the decompiled source of functions. */
-var funcToString = funcProto.toString;
-
-/** Used to check objects for own properties. */
-var hasOwnProperty = objectProto.hasOwnProperty;
-
-/** Used to infer the `Object` constructor. */
-var objectCtorString = funcToString.call(Object);
-
-/**
- * Checks if `value` is a plain object, that is, an object created by the
- * `Object` constructor or one with a `[[Prototype]]` of `null`.
- *
- * @static
- * @memberOf _
- * @since 0.8.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is a plain object, else `false`.
- * @example
- *
- * function Foo() {
- *   this.a = 1;
- * }
- *
- * _.isPlainObject(new Foo);
- * // => false
- *
- * _.isPlainObject([1, 2, 3]);
- * // => false
- *
- * _.isPlainObject({ 'x': 0, 'y': 0 });
- * // => true
- *
- * _.isPlainObject(Object.create(null));
- * // => true
- */
-function isPlainObject(value) {
-  if (!isObjectLike(value) || baseGetTag(value) != objectTag) {
-    return false;
-  }
-  var proto = getPrototype(value);
-  if (proto === null) {
-    return true;
-  }
-  var Ctor = hasOwnProperty.call(proto, 'constructor') && proto.constructor;
-  return typeof Ctor == 'function' && Ctor instanceof Ctor &&
-    funcToString.call(Ctor) == objectCtorString;
-}
 
 function symbolObservablePonyfill(root) {
 	var result;
@@ -224,21 +23,22 @@ function symbolObservablePonyfill(root) {
 }
 
 /* global window */
-var root$2;
+
+var root;
 
 if (typeof self !== 'undefined') {
-  root$2 = self;
+  root = self;
 } else if (typeof window !== 'undefined') {
-  root$2 = window;
+  root = window;
 } else if (typeof global !== 'undefined') {
-  root$2 = global;
+  root = global;
 } else if (typeof module !== 'undefined') {
-  root$2 = module;
+  root = module;
 } else {
-  root$2 = Function('return this')();
+  root = Function('return this')();
 }
 
-var result = symbolObservablePonyfill(root$2);
+var result = symbolObservablePonyfill(root);
 
 /**
  * These are private action types reserved by Redux.
@@ -247,34 +47,71 @@ var result = symbolObservablePonyfill(root$2);
  * Do not reference these action types directly in your code.
  */
 var ActionTypes = {
-  INIT: '@@redux/INIT'
+  INIT: '@@redux/INIT' + Math.random().toString(36).substring(7).split('').join('.'),
+  REPLACE: '@@redux/REPLACE' + Math.random().toString(36).substring(7).split('').join('.')
+};
 
-  /**
-   * Creates a Redux store that holds the state tree.
-   * The only way to change the data in the store is to call `dispatch()` on it.
-   *
-   * There should only be a single store in your app. To specify how different
-   * parts of the state tree respond to actions, you may combine several reducers
-   * into a single reducer function by using `combineReducers`.
-   *
-   * @param {Function} reducer A function that returns the next state tree, given
-   * the current state tree and the action to handle.
-   *
-   * @param {any} [preloadedState] The initial state. You may optionally specify it
-   * to hydrate the state from the server in universal apps, or to restore a
-   * previously serialized user session.
-   * If you use `combineReducers` to produce the root reducer function, this must be
-   * an object with the same shape as `combineReducers` keys.
-   *
-   * @param {Function} [enhancer] The store enhancer. You may optionally specify it
-   * to enhance the store with third-party capabilities such as middleware,
-   * time travel, persistence, etc. The only store enhancer that ships with Redux
-   * is `applyMiddleware()`.
-   *
-   * @returns {Store} A Redux store that lets you read the state, dispatch actions
-   * and subscribe to changes.
-   */
-};function createStore(reducer, preloadedState, enhancer) {
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
+  return typeof obj;
+} : function (obj) {
+  return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+};
+
+var _extends = Object.assign || function (target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i];
+
+    for (var key in source) {
+      if (Object.prototype.hasOwnProperty.call(source, key)) {
+        target[key] = source[key];
+      }
+    }
+  }
+
+  return target;
+};
+
+/**
+ * @param {any} obj The object to inspect.
+ * @returns {boolean} True if the argument appears to be a plain object.
+ */
+function isPlainObject(obj) {
+  if ((typeof obj === 'undefined' ? 'undefined' : _typeof(obj)) !== 'object' || obj === null) return false;
+
+  var proto = obj;
+  while (Object.getPrototypeOf(proto) !== null) {
+    proto = Object.getPrototypeOf(proto);
+  }
+
+  return Object.getPrototypeOf(obj) === proto;
+}
+
+/**
+ * Creates a Redux store that holds the state tree.
+ * The only way to change the data in the store is to call `dispatch()` on it.
+ *
+ * There should only be a single store in your app. To specify how different
+ * parts of the state tree respond to actions, you may combine several reducers
+ * into a single reducer function by using `combineReducers`.
+ *
+ * @param {Function} reducer A function that returns the next state tree, given
+ * the current state tree and the action to handle.
+ *
+ * @param {any} [preloadedState] The initial state. You may optionally specify it
+ * to hydrate the state from the server in universal apps, or to restore a
+ * previously serialized user session.
+ * If you use `combineReducers` to produce the root reducer function, this must be
+ * an object with the same shape as `combineReducers` keys.
+ *
+ * @param {Function} [enhancer] The store enhancer. You may optionally specify it
+ * to enhance the store with third-party capabilities such as middleware,
+ * time travel, persistence, etc. The only store enhancer that ships with Redux
+ * is `applyMiddleware()`.
+ *
+ * @returns {Store} A Redux store that lets you read the state, dispatch actions
+ * and subscribe to changes.
+ */
+function createStore(reducer, preloadedState, enhancer) {
   var _ref2;
 
   if (typeof preloadedState === 'function' && typeof enhancer === 'undefined') {
@@ -312,6 +149,10 @@ var ActionTypes = {
    * @returns {any} The current state tree of your application.
    */
   function getState() {
+    if (isDispatching) {
+      throw new Error('You may not call store.getState() while the reducer is executing. ' + 'The reducer has already received the state as an argument. ' + 'Pass it down from the top reducer instead of reading it from the store.');
+    }
+
     return currentState;
   }
 
@@ -340,7 +181,11 @@ var ActionTypes = {
    */
   function subscribe(listener) {
     if (typeof listener !== 'function') {
-      throw new Error('Expected listener to be a function.');
+      throw new Error('Expected the listener to be a function.');
+    }
+
+    if (isDispatching) {
+      throw new Error('You may not call store.subscribe() while the reducer is executing. ' + 'If you would like to be notified after the store has been updated, subscribe from a ' + 'component and invoke store.getState() in the callback to access the latest state. ' + 'See https://redux.js.org/api-reference/store#subscribe(listener) for more details.');
     }
 
     var isSubscribed = true;
@@ -351,6 +196,10 @@ var ActionTypes = {
     return function unsubscribe() {
       if (!isSubscribed) {
         return;
+      }
+
+      if (isDispatching) {
+        throw new Error('You may not unsubscribe from a store listener while the reducer is executing. ' + 'See https://redux.js.org/api-reference/store#subscribe(listener) for more details.');
       }
 
       isSubscribed = false;
@@ -431,7 +280,7 @@ var ActionTypes = {
     }
 
     currentReducer = nextReducer;
-    dispatch({ type: ActionTypes.INIT });
+    dispatch({ type: ActionTypes.REPLACE });
   }
 
   /**
@@ -454,7 +303,7 @@ var ActionTypes = {
        * emission of values from the observable.
        */
       subscribe: function subscribe(observer) {
-        if (typeof observer !== 'object') {
+        if ((typeof observer === 'undefined' ? 'undefined' : _typeof(observer)) !== 'object' || observer === null) {
           throw new TypeError('Expected the observer to be an object.');
         }
 
@@ -503,16 +352,14 @@ function warning(message) {
     // "break on all exceptions" in your console,
     // it would pause the execution at this line.
     throw new Error(message);
-    /* eslint-disable no-empty */
-  } catch (e) {}
-  /* eslint-enable no-empty */
+  } catch (e) {} // eslint-disable-line no-empty
 }
 
 function getUndefinedStateErrorMessage(key, action) {
   var actionType = action && action.type;
-  var actionName = actionType && '"' + actionType.toString() + '"' || 'an action';
+  var actionDescription = actionType && 'action "' + String(actionType) + '"' || 'an action';
 
-  return 'Given action ' + actionName + ', reducer "' + key + '" returned undefined. ' + 'To ignore an action, you must explicitly return the previous state. ' + 'If you want this reducer to hold no value, you can return null instead of undefined.';
+  return 'Given ' + actionDescription + ', reducer "' + key + '" returned undefined. ' + 'To ignore an action, you must explicitly return the previous state. ' + 'If you want this reducer to hold no value, you can return null instead of undefined.';
 }
 
 function getUnexpectedStateShapeWarningMessage(inputState, reducers, action, unexpectedKeyCache) {
@@ -534,6 +381,8 @@ function getUnexpectedStateShapeWarningMessage(inputState, reducers, action, une
   unexpectedKeys.forEach(function (key) {
     unexpectedKeyCache[key] = true;
   });
+
+  if (action && action.type === ActionTypes.REPLACE) return;
 
   if (unexpectedKeys.length > 0) {
     return 'Unexpected ' + (unexpectedKeys.length > 1 ? 'keys' : 'key') + ' ' + ('"' + unexpectedKeys.join('", "') + '" found in ' + argumentName + '. ') + 'Expected to find one of the known reducer keys instead: ' + ('"' + reducerKeys.join('", "') + '". Unexpected keys will be ignored.');
@@ -637,7 +486,7 @@ function combineReducers(reducers) {
 
 function bindActionCreator(actionCreator, dispatch) {
   return function () {
-    return dispatch(actionCreator.apply(undefined, arguments));
+    return dispatch(actionCreator.apply(this, arguments));
   };
 }
 
@@ -667,8 +516,8 @@ function bindActionCreators(actionCreators, dispatch) {
     return bindActionCreator(actionCreators, dispatch);
   }
 
-  if (typeof actionCreators !== 'object' || actionCreators === null) {
-    throw new Error('bindActionCreators expected an object or a function, instead received ' + (actionCreators === null ? 'null' : typeof actionCreators) + '. ' + 'Did you write "import ActionCreators from" instead of "import * as ActionCreators from"?');
+  if ((typeof actionCreators === 'undefined' ? 'undefined' : _typeof(actionCreators)) !== 'object' || actionCreators === null) {
+    throw new Error('bindActionCreators expected an object or a function, instead received ' + (actionCreators === null ? 'null' : typeof actionCreators === 'undefined' ? 'undefined' : _typeof(actionCreators)) + '. ' + 'Did you write "import ActionCreators from" instead of "import * as ActionCreators from"?');
   }
 
   var keys = Object.keys(actionCreators);
@@ -716,8 +565,6 @@ function compose() {
   });
 }
 
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
 /**
  * Creates a store enhancer that applies middleware to the dispatch method
  * of the Redux store. This is handy for a variety of tasks, such as expressing
@@ -740,18 +587,23 @@ function applyMiddleware() {
   }
 
   return function (createStore) {
-    return function (reducer, preloadedState, enhancer) {
-      var store = createStore(reducer, preloadedState, enhancer);
-      var _dispatch = store.dispatch;
-      var chain = [];
+    return function () {
+      for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+        args[_key2] = arguments[_key2];
+      }
+
+      var store = createStore.apply(undefined, args);
+      var _dispatch = function dispatch() {
+        throw new Error('Dispatching while constructing your middleware is not allowed. ' + 'Other middleware would not be applied to this dispatch.');
+      };
 
       var middlewareAPI = {
         getState: store.getState,
-        dispatch: function dispatch(action) {
-          return _dispatch(action);
+        dispatch: function dispatch() {
+          return _dispatch.apply(undefined, arguments);
         }
       };
-      chain = middlewares.map(function (middleware) {
+      var chain = middlewares.map(function (middleware) {
         return middleware(middlewareAPI);
       });
       _dispatch = compose.apply(undefined, chain)(store.dispatch);
@@ -764,13 +616,13 @@ function applyMiddleware() {
 }
 
 /*
-* This is a dummy function to check if the function name has been altered by minification.
-* If the function has been minified and NODE_ENV !== 'production', warn the user.
-*/
+ * This is a dummy function to check if the function name has been altered by minification.
+ * If the function has been minified and NODE_ENV !== 'production', warn the user.
+ */
 function isCrushed() {}
 
-if ("development" !== 'production' && typeof isCrushed.name === 'string' && isCrushed.name !== 'isCrushed') {
-  warning('You are currently using minified code outside of NODE_ENV === \'production\'. ' + 'This means that you are running a slower development build of Redux. ' + 'You can use loose-envify (https://github.com/zertosh/loose-envify) for browserify ' + 'or DefinePlugin for webpack (http://stackoverflow.com/questions/30030031) ' + 'to ensure you have the correct code for your production build.');
+if (typeof isCrushed.name === 'string' && isCrushed.name !== 'isCrushed') {
+  warning("You are currently using minified code outside of NODE_ENV === 'production'. " + 'This means that you are running a slower development build of Redux. ' + 'You can use loose-envify (https://github.com/zertosh/loose-envify) for browserify ' + 'or DefinePlugin for webpack (http://stackoverflow.com/questions/30030031) ' + 'to ensure you have the correct code for your production build.');
 }
 
 exports.createStore = createStore;
@@ -778,6 +630,7 @@ exports.combineReducers = combineReducers;
 exports.bindActionCreators = bindActionCreators;
 exports.applyMiddleware = applyMiddleware;
 exports.compose = compose;
+exports.__DO_NOT_USE__ActionTypes = ActionTypes;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

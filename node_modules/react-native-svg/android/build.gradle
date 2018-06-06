@@ -4,19 +4,22 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.1.0'
+        //noinspection GradleDependency
+        classpath 'com.android.tools.build:gradle:2.2.3'
     }
 }
 
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.1"
+    compileSdkVersion 23
+    //noinspection GradleDependency
+    buildToolsVersion "23.0.1"
 
     defaultConfig {
         minSdkVersion 16
-        targetSdkVersion 23
+        //noinspection OldTargetApi
+        targetSdkVersion 22
         versionCode 1
         versionName "1.0"
     }
@@ -35,5 +38,6 @@ repositories {
 }
 
 dependencies {
+    //noinspection GradleDynamicVersion
     compile 'com.facebook.react:react-native:+'
 }

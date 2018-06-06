@@ -1,32 +1,26 @@
-import {createStore, combineReducers, applyMiddleware} from 'redux';
+import { Constants } from 'expo';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
+import { persistStore, persistReducer } from 'redux-persist';
+import createEncryptor from 'redux-persist-transform-encrypt';
+import { AsyncStorage } from 'react-native';
+// import { btoa } from 'Base64';
 
-import navState, {navStateMiddleware} from './navState';
+import appState from './appState';
+import userState from './userState';
+import actions from './actions';
+import C from './actionTypes';
 
-const initialAppState = {};
-const appState = (state = initialAppState, action) => {
-  const {type} = action;
-  switch (type) {
-    default: {
-      return state;
-    }
-  }
-}
+const Store = createStore(persistReducer(
+  { key: 'root', storage: AsyncStorage },
+  combineReducers({ appState, userState }),
+  applyMiddleware(middleware, thunk),
+));
 
-const initialUserState = {}
-const userState = (state = initialUserState, action) => {
-  const {type} = action;
-  switch (type) {
-    default: {
-      return state;
-    }
-  }
-}
+// encrypt stored state with hashed device ID
+const encryptor = createEncryptor({ secretKey: btoa(Constants.deviceId) });
 
-const Store = createStore(
-  combineReducers({
-    appState, 
-    userState, 
-    navState,
-  }), applyMiddleware(navStateMiddleware));
+const persister = persistStore(Store);
 
 export default Store;
+export { persister, actions, C };

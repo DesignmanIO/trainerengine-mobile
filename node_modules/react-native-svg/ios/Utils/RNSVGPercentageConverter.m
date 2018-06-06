@@ -19,7 +19,9 @@ static NSRegularExpression* percentageRegExp;
 
 + (CGFloat)stringToFloat:(NSString *)string relative:(CGFloat)relative offset:(CGFloat)offset
 {
-    if (![self isPercentage:string]) {
+    if (string == nil) {
+        return offset;
+    } else if (![self isPercentage:string]) {
         return [string floatValue] + offset;
     } else {
         return [self percentageToFloat:string relative:relative offset:offset];
@@ -45,6 +47,9 @@ static NSRegularExpression* percentageRegExp;
 
 + (BOOL)isPercentage:(NSString *) string
 {
+    if (![string isKindOfClass:[NSString class]]) {
+      return NO;
+    }
     return [percentageRegExp firstMatchInString:string options:0 range:NSMakeRange(0, [string length])] != nil;
 }
 

@@ -41,6 +41,7 @@ type PropsType = ViewPropTypes & {
   type?: number | string,
   onCameraReady?: Function,
   onBarCodeRead?: Function,
+  useCamera2Api?: boolean,
   faceDetectionMode?: number,
   flashMode?: number | string,
   barCodeTypes?: Array<string | number>,
@@ -88,6 +89,7 @@ export default class Camera extends React.Component<PropsType> {
     onCameraReady: PropTypes.func,
     onBarCodeRead: PropTypes.func,
     onFacesDetected: PropTypes.func,
+    useCamera2Api: PropTypes.bool,
     faceDetectionMode: PropTypes.number,
     faceDetectionLandmarks: PropTypes.number,
     faceDetectionClassifications: PropTypes.number,
@@ -222,6 +224,7 @@ export default class Camera extends React.Component<PropsType> {
 
     if (Platform.OS === 'ios') {
       delete newProps.ratio;
+      delete newProps.useCamera2Api;
     }
 
     return newProps;

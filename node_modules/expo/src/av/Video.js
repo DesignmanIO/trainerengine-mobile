@@ -7,7 +7,6 @@ import {
   Image,
   findNodeHandle,
   NativeModules,
-  Platform,
   requireNativeComponent,
   StyleSheet,
   View,

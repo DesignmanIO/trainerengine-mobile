@@ -35,9 +35,9 @@ export default (Component: Function) =>
     subscription: EmitterSubscription;
 
     /**
-   * On init, register for updates on `adsManager` to know when it becomes
-   * available for accessing
-   */
+     * On init, register for updates on `adsManager` to know when it becomes
+     * available for accessing
+     */
     componentDidMount() {
       this.subscription = this.props.adsManager.onAdsLoaded(() =>
         this.setState({ canRequestAds: true })
@@ -45,8 +45,8 @@ export default (Component: Function) =>
     }
 
     /**
-   * Clear subscription when component goes off screen
-   */
+     * Clear subscription when component goes off screen
+     */
     componentWillUnmount() {
       this.subscription.remove();
     }

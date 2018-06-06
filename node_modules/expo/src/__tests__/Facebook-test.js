@@ -27,18 +27,20 @@ describeCrossPlatform('iOS and Android', () => {
     Facebook.logInWithReadPermissionsAsync('appId', {
       some: 'options',
     });
-    expect(
-      NativeModules.ExponentFacebook.logInWithReadPermissionsAsync
-    ).toHaveBeenCalledWith('appId', { some: 'options' });
+    expect(NativeModules.ExponentFacebook.logInWithReadPermissionsAsync).toHaveBeenCalledWith(
+      'appId',
+      { some: 'options' }
+    );
   });
 
   it('converts to appId string when called with a number parameter', () => {
     Facebook.logInWithReadPermissionsAsync(1234, {
       some: 'options',
     });
-    expect(
-      NativeModules.ExponentFacebook.logInWithReadPermissionsAsync
-    ).toHaveBeenCalledWith('1234', { some: 'options' });
+    expect(NativeModules.ExponentFacebook.logInWithReadPermissionsAsync).toHaveBeenCalledWith(
+      '1234',
+      { some: 'options' }
+    );
     expect(console.warn).toHaveBeenCalledTimes(1);
     expect(console.warn.mock.calls[0][0]).toMatchSnapshot('warning');
   });

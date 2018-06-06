@@ -136,7 +136,7 @@ export class Sound {
     downloadFirst: boolean = true
   ): Promise<PlaybackStatus> {
     _throwIfAudioIsDisabled();
-    if (this.loading) {
+    if (this._loading) {
       throw new Error('The Sound is already loading.');
     }
     if (!this._loaded) {

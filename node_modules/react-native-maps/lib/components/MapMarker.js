@@ -35,14 +35,14 @@ const propTypes = {
 
   /**
    * The title of the marker. This is only used if the <Marker /> component has no children that
-   * are an `<MapView.Callout />`, in which case the default callout behavior will be used, which
+   * are a `<Callout />`, in which case the default callout behavior will be used, which
    * will show both the `title` and the `description`, if provided.
    */
   title: PropTypes.string,
 
   /**
    * The description of the marker. This is only used if the <Marker /> component has no children
-   * that are an `<MapView.Callout />`, in which case the default callout behavior will be used,
+   * that are a `<Callout />`, in which case the default callout behavior will be used,
    * which will show both the `title` and the `description`, if provided.
    */
   description: PropTypes.string,
@@ -178,6 +178,22 @@ const propTypes = {
   tracksViewChanges: PropTypes.bool,
 
   /**
+   * Sets whether this marker should track view changes in info window true.
+   *
+   * @platform ios
+   */
+
+  tracksInfoWindowChanges: PropTypes.bool,
+
+  /**
+   * Stops Marker onPress events from propagating to and triggering MapView onPress events.
+   *
+   * @platform ios
+   */
+
+  stopPropagation: PropTypes.bool,
+
+  /**
    * Callback that is called when the user presses on the marker
    */
   onPress: PropTypes.func,
@@ -219,7 +235,7 @@ const propTypes = {
 };
 
 const defaultProps = {
-  onPress() {},
+  stopPropagation: false,
 };
 
 class MapMarker extends React.Component {
@@ -228,6 +244,7 @@ class MapMarker extends React.Component {
 
     this.showCallout = this.showCallout.bind(this);
     this.hideCallout = this.hideCallout.bind(this);
+    this.animateMarkerToCoordinate = this.animateMarkerToCoordinate.bind(this);
   }
 
   setNativeProps(props) {
@@ -240,6 +257,10 @@ class MapMarker extends React.Component {
 
   hideCallout() {
     this._runCommand('hideCallout', []);
+  }
+
+  animateMarkerToCoordinate(coordinate, duration) {
+    this._runCommand('animateMarkerToCoordinate', [coordinate, duration || 500]);
   }
 
   _getHandle() {
@@ -282,6 +303,14 @@ class MapMarker extends React.Component {
         {...this.props}
         image={image}
         style={[styles.marker, this.props.style]}
+        onPress={event => {
+          if (this.props.stopPropagation) {
+            event.stopPropagation();
+          }
+          if (this.props.onPress) {
+            this.props.onPress(event);
+          }
+        }}
       />
     );
   }
@@ -300,7 +329,7 @@ const styles = StyleSheet.create({
 
 MapMarker.Animated = Animated.createAnimatedComponent(MapMarker);
 
-module.exports = decorateMapComponent(MapMarker, {
+export default decorateMapComponent(MapMarker, {
   componentType: 'Marker',
   providers: {
     google: {

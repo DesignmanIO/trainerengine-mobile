@@ -9,13 +9,17 @@
 #import <Foundation/Foundation.h>
 #import <CoreText/CoreText.h>
 #import "RNSVGText.h"
-#import "RNSVGBezierTransformer.h"
 
 @interface RNSVGTextPath : RNSVGText
 
 @property (nonatomic, strong) NSString *href;
+@property (nonatomic, strong) NSString *side;
+@property (nonatomic, strong) NSString *method;
+@property (nonatomic, strong) NSString *midLine;
+@property (nonatomic, strong) NSString *spacing;
 @property (nonatomic, strong) NSString *startOffset;
 
-- (RNSVGBezierTransformer *)getBezierTransformer;
+- (void)getPathLength:(CGFloat*)length lineCount:(NSUInteger*)lineCount lengths:(NSArray* __strong *)lengths lines:(NSArray* __strong *)lines isClosed:(BOOL*)isClosed;
+
 
 @end

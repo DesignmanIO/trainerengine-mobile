@@ -1,69 +1,71 @@
+// @flow
+
 'use strict';
 
-import { NativeModules, DeviceEventEmitter } from 'react-native';
+import { NativeModules, NativeEventEmitter, Platform } from 'react-native';
+import type { EmitterSubscription, NativeModule } from 'react-native';
 
-const RNAdMobInterstitial = NativeModules.RNAdMobInterstitial;
+const RNAdMobInterstitial: NativeModule = NativeModules.RNAdMobInterstitial;
 
-const eventHandlers = {
-  interstitialDidLoad: new Map(),
-  interstitialDidFailToLoad: new Map(),
-  interstitialDidOpen: new Map(),
-  interstitialDidClose: new Map(),
-  interstitialWillLeaveApplication: new Map(),
-};
+const adMobInterstitialEmitter = new NativeEventEmitter(RNAdMobInterstitial);
 
-const addEventListener = (type, handler) => {
-  switch (type) {
-    case 'interstitialDidLoad':
-      eventHandlers[type].set(handler, DeviceEventEmitter.addListener(type, handler));
-      break;
-    case 'interstitialDidFailToLoad':
-      eventHandlers[type].set(
-        handler,
-        DeviceEventEmitter.addListener(type, error => {
-          handler(error);
-        })
-      );
-      break;
-    case 'interstitialDidOpen':
-      eventHandlers[type].set(handler, DeviceEventEmitter.addListener(type, handler));
-      break;
-    case 'interstitialDidClose':
-      eventHandlers[type].set(handler, DeviceEventEmitter.addListener(type, handler));
-      break;
-    case 'interstitialWillLeaveApplication':
-      eventHandlers[type].set(handler, DeviceEventEmitter.addListener(type, handler));
-      break;
-    default:
-      console.log(`Event with type ${type} does not exist.`);
+const eventNames = [
+  'interstitialDidLoad',
+  'interstitialDidFailToLoad',
+  'interstitialDidOpen',
+  'interstitialDidClose',
+  'interstitialWillLeaveApplication',
+];
+
+type EventNameType =
+  | 'interstitialDidLoad'
+  | 'interstitialDidFailToLoad'
+  | 'interstitialDidOpen'
+  | 'interstitialDidClose'
+  | 'interstitialWillLeaveApplication';
+
+const eventHandlers: { [EventNameType]: Map<Function, EmitterSubscription> } = {};
+
+eventNames.forEach(eventName => {
+  eventHandlers[eventName] = new Map();
+});
+
+const addEventListener = (type: EventNameType, handler: Function) => {
+  if (eventNames.includes((type: EventNameType))) {
+    eventHandlers[type].set(handler, adMobInterstitialEmitter.addListener(type, handler));
+  } else {
+    console.log(`Event with type ${type} does not exist.`);
   }
 };
 
-const removeEventListener = (type, handler) => {
-  if (!eventHandlers[type].has(handler)) {
+const removeEventListener = (type: EventNameType, handler: Function) => {
+  const eventSubscription = eventHandlers[type].get(handler);
+  if (!eventHandlers[type].has(handler) || !eventSubscription) {
     return;
   }
-  eventHandlers[type].get(handler).remove();
+  eventSubscription.remove();
   eventHandlers[type].delete(handler);
 };
 
-const removeAllListeners = () => {
-  DeviceEventEmitter.removeAllListeners('interstitialDidLoad');
-  DeviceEventEmitter.removeAllListeners('interstitialDidFailToLoad');
-  DeviceEventEmitter.removeAllListeners('interstitialDidOpen');
-  DeviceEventEmitter.removeAllListeners('interstitialDidClose');
-  DeviceEventEmitter.removeAllListeners('interstitialWIllLeaveApplication');
-};
+const removeAllListeners = () =>
+  eventNames.forEach(eventName => adMobInterstitialEmitter.removeAllListeners(eventName));
 
 module.exports = {
   ...RNAdMobInterstitial,
-  requestAd: (cb = () => {}) => RNAdMobInterstitial.requestAd(cb), // requestAd callback is optional
-  showAd: (cb = () => {}) => RNAdMobInterstitial.showAd(cb), // showAd callback is optional
+  requestAdAsync: (): Promise<void> => RNAdMobInterstitial.requestAd(),
+  showAdAsync: (): Promise<void> => RNAdMobInterstitial.showAd(),
+  dismissAdAsync: (): Promise<void> =>
+    new Promise((resolve, reject) => {
+      if (Platform.OS === 'ios') {
+        RNAdMobInterstitial.dismissAd()
+          .then(resolve)
+          .catch(reject);
+      } else {
+        reject(new Error('Dismissing ads programmatically is supported only on iOS.'));
+      }
+    }),
+  getIsReadyAsync: (): Promise<boolean> => RNAdMobInterstitial.getIsReady(),
   addEventListener,
   removeEventListener,
   removeAllListeners,
-  setAdUnitId: id => {
-    RNAdMobInterstitial.setAdUnitID(id);
-    console.warn(`setAdUnitId will be deprecated soon. Please use setAdUnitID instead.`);
-  },
 };

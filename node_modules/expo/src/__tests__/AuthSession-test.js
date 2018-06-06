@@ -25,8 +25,9 @@ it('returns correct redirect URL from getRedirectUrl', () => {
 });
 
 it('returns the correct return URL from getDefaultReturnUrl', () => {
-  mockProperty(Constants, 'linkingUrl', 'exp://expo.io/@example/abc+');
-  expect(AuthSession.getDefaultReturnUrl()).toEqual('exp://expo.io/@example/abc+expo-auth-session');
+  expect(AuthSession.getDefaultReturnUrl()).toEqual(
+    'exp://exp.host/@test/test/--/expo-auth-session'
+  );
 });
 
 it('returns the correct start URL from getStartUrl', () => {

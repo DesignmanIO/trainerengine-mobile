@@ -33,9 +33,10 @@ describeCrossPlatform('all Amplitude methods available', () => {
 
   it('can logEventWithProperties', () => {
     expect(Amplitude.logEventWithProperties('event-name', { some: 'property' })).toBeUndefined();
-    expect(
-      NativeModules.ExponentAmplitude.logEventWithProperties
-    ).toHaveBeenCalledWith('event-name', { some: 'property' });
+    expect(NativeModules.ExponentAmplitude.logEventWithProperties).toHaveBeenCalledWith(
+      'event-name',
+      { some: 'property' }
+    );
   });
 
   it('can setGroup', () => {

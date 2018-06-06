@@ -8,8 +8,8 @@ type SDKLogLevel = 'none' | 'debug' | 'verbose' | 'warning' | 'error' | 'notific
 
 export default {
   /**
-    * Contains hash of the device id
-    */
+   * Contains hash of the device id
+   */
   get currentDeviceHash(): string {
     return CTKAdSettingsManager.currentDeviceHash;
   },

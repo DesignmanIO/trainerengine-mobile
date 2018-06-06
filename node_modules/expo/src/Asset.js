@@ -73,7 +73,7 @@ const pickScale = meta => {
 // not included in the app bundle.
 const getUriInBundle = (hash, type) => {
   const assetName = 'asset_' + hash + (type ? '.' + type : '');
-  if (Constants.appOwnership !== 'standalone' || !bundledAssets.has(assetName)) {
+  if (__DEV__ || Constants.appOwnership !== 'standalone' || !bundledAssets.has(assetName)) {
     return null;
   }
   return `${FS.bundleDirectory}${assetName}`;

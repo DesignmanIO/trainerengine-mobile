@@ -23,6 +23,14 @@ export default {
     return ExponentSegment.identifyWithTraits(userId, traits);
   },
 
+  group(groupId: string): void {
+    return ExponentSegment.group(groupId);
+  },
+
+  groupWithTraits(groupId: string, traits: { [string]: any }): void {
+    return ExponentSegment.groupWithTraits(groupId, traits);
+  },
+
   reset(): void {
     return ExponentSegment.reset();
   },

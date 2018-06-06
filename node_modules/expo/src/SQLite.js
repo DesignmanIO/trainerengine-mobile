@@ -5,7 +5,7 @@ import './timer/polyfillNextTick';
 import map from 'lodash.map';
 import zipObject from 'lodash.zipobject';
 import { NativeModules, Platform } from 'react-native';
-import customOpenDatabase from 'websql/custom';
+import customOpenDatabase from '@expo/websql/custom';
 
 const { ExponentSQLite } = NativeModules;
 

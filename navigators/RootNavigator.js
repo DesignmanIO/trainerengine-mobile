@@ -1,17 +1,21 @@
-import {StackNavigator} from 'react-navigation';
-import {connect} from 'react-redux';
+import { createSwitchNavigator } from 'react-navigation';
+import { connect } from 'react-redux';
 
-import LoggedInNavigator from './LoggedInNavigator'
-import LoggedOutNavigator from './LoggedOutNavigator'
+import AppNavigator from './AppNavigator';
+import AuthNavigator from './AuthNavigator';
+import AuthLoading from './AuthLoading';
 
-const RootNavigator = StackNavigator({
-  LoggedInNavigator: {screen: LoggedInNavigator},
-  LoggedOutNavigator: {screen: LoggedOutNavigator},
-},
-{
-  initialRouteName: 'LoggedInNavigator',
-  navigationOptions: {},
-  mode: 'card',
-});
+const RootNavigator = createSwitchNavigator(
+  {
+    AuthLoading,
+    AppNavigator,
+    AuthNavigator,
+  },
+  {
+    initialRouteName: 'AuthLoading',
+    navigationOptions: {},
+    mode: 'card',
+  },
+);
 
 export default RootNavigator;

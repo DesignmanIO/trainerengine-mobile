@@ -1,25 +1,23 @@
-import {
-  createReduxBoundAddListener,
-  createReactNavigationReduxMiddleware,
-} from 'react-navigation-redux-helpers';
+import { AppNavigator } from '../views';
 
-import RootNavigator from '../navigators/RootNavigator';
+// Hack around issue that comes from separating this from AppNavigator code
+// https://github.com/react-navigation/react-navigation/issues/3186
+let Navigator = AppNavigator;
 
-const initialNavState = RootNavigator.router.getStateForAction(
-  RootNavigator.router.getActionForPathAndParams('LoggedInNavigator')
+if (!AppNavigator) {
+  Navigator = {
+    router: {
+      getStateForAction: () => null,
+      getActionForPathAndParams: () => null,
+    },
+  };
+}
+// End hack
+
+const initialState = Navigator.router.getStateForAction(Navigator.router.getActionForPathAndParams('Home'),
 );
 
-const navStateMiddleware = createReactNavigationReduxMiddleware(
-  "root",
-  state => state.navState,
-);
-const addListener = createReduxBoundAddListener("root");
-
-const navState = (state = initialNavState, action) => {
-  // console.log(action, state.routes);
-  const nextState = RootNavigator.router.getStateForAction(action, state);
+export default (state = initialState, action) => {
+  const nextState = Navigator.router.getStateForAction(action, state);
   return nextState || state;
 };
-
-export default navState;
-export {addListener, navStateMiddleware};

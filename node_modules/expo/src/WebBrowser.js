@@ -10,10 +10,10 @@ type RedirectEvent = {
 };
 
 type BrowserResult = {
-  type: 'cancel' | 'dismissed',
+  type: 'cancel' | 'dismiss',
 };
 
-async function openBrowserAsync(url: string): Promise<{ type: 'cancel' | 'dismissed' }> {
+async function openBrowserAsync(url: string): Promise<{ type: 'cancel' | 'dismiss' }> {
   return ExponentWebBrowser.openBrowserAsync(url);
 }
 

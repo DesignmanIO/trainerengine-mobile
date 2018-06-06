@@ -15,7 +15,7 @@
 @implementation RNSVGImage
 {
     CGImageRef _image;
-    CGFloat _imageRatio;
+    CGSize _imageSize;
 }
 
 - (void)setSrc:(id)src
@@ -25,14 +25,13 @@
     }
     _src = src;
     CGImageRelease(_image);
+    _image = CGImageRetain([RCTConvert CGImage:src]);
     RCTImageSource *source = [RCTConvert RCTImageSource:src];
     if (source.size.width != 0 && source.size.height != 0) {
-        _imageRatio = source.size.width / source.size.height;
+        _imageSize = source.size;
     } else {
-        _imageRatio = 0.0;
+        _imageSize = CGSizeMake(CGImageGetWidth(_image), CGImageGetHeight(_image));
     }
-    
-    _image = CGImageRetain([RCTConvert CGImage:src]);
     [self invalidate];
 }
 
@@ -97,60 +96,46 @@
 
 - (void)renderLayerTo:(CGContextRef)context
 {
-    CGRect rect = [self getRect:context];
-    // add hit area
-    CGPathRef hitArea = CGPathCreateWithRect(rect, nil);
-    [self setHitArea:hitArea];
-    CGPathRelease(hitArea);
-    
     CGContextSaveGState(context);
-    CGContextTranslateCTM(context, 0, rect.size.height + 2 * rect.origin.y);
-    CGContextScaleCTM(context, 1, -1);
-    
+
+    // add hit area
+    CGRect hitArea = [self getHitArea];
+    CGPathRef hitAreaPath = CGPathCreateWithRect(hitArea, nil);
+    [self setHitArea:hitAreaPath];
+    CGPathRelease(hitAreaPath);
+
     // apply viewBox transform on Image render.
-    CGFloat imageRatio = _imageRatio;
-    CGFloat rectWidth = CGRectGetWidth(rect);
-    CGFloat rectHeight = CGRectGetHeight(rect);
-    CGFloat rectX = CGRectGetMinX(rect);
-    CGFloat rectY = CGRectGetMinY(rect);
-    CGFloat rectRatio = rectWidth / rectHeight;
-    CGRect renderRect;
-    
-    if (!imageRatio || imageRatio == rectRatio) {
-        renderRect = rect;
-    } else if (imageRatio < rectRatio) {
-        renderRect = CGRectMake(0, 0, rectHeight * imageRatio, rectHeight);
-    } else {
-        renderRect = CGRectMake(0, 0, rectWidth, rectWidth / imageRatio);
-    }
-    
-    CGRect vbRect = CGRectMake(0, 0, CGRectGetWidth(renderRect), CGRectGetHeight(renderRect));
-    CGRect eRect = CGRectMake([self getContextLeft], [self getContextTop], rectWidth, rectHeight);
-    
-    CGAffineTransform transform = [RNSVGViewBox getTransform:vbRect eRect:eRect align:self.align meetOrSlice:self.meetOrSlice fromSymbol:NO];
-    
-    renderRect = CGRectApplyAffineTransform(renderRect, transform);
-    renderRect = CGRectApplyAffineTransform(renderRect, CGAffineTransformMakeTranslation(rectX, rectY));
-    
+    CGRect imageBounds = CGRectMake(0, 0, _imageSize.width, _imageSize.height);
+    CGAffineTransform viewbox = [RNSVGViewBox getTransform:imageBounds eRect:hitArea align:self.align meetOrSlice:self.meetOrSlice];
+
+    CGContextTranslateCTM(context, 0, hitArea.size.height);
+    CGContextScaleCTM(context, 1, -1);
     [self clip:context];
-    CGContextClipToRect(context, rect);
- 
-    CGContextDrawImage(context, renderRect, _image);
+    CGContextClipToRect(context, hitArea);
+    CGContextConcatCTM(context, viewbox);
+    CGContextDrawImage(context, imageBounds, _image);
     CGContextRestoreGState(context);
-    
 }
 
-- (CGRect)getRect:(CGContextRef)context
+- (CGRect)getHitArea
 {
-    return CGRectMake([self relativeOnWidth:self.x],
-                      [self relativeOnHeight:self.y],
-                      [self relativeOnWidth:self.width],
-                      [self relativeOnHeight:self.height]);
+    CGFloat x = [self relativeOnWidth:self.x];
+    CGFloat y = [self relativeOnHeight:self.y];
+    CGFloat width = [self relativeOnWidth:self.width];
+    CGFloat height = [self relativeOnHeight:self.height];
+    if (width == 0) {
+        width = _imageSize.width;
+    }
+    if (height == 0) {
+        height = _imageSize.height;
+    }
+
+    return CGRectMake(x, y, width, height);
 }
 
 - (CGPathRef)getPath:(CGContextRef)context
 {
-    return (CGPathRef)CFAutorelease(CGPathCreateWithRect([self getRect:context], nil));
+    return (CGPathRef)CFAutorelease(CGPathCreateWithRect([self getHitArea], nil));
 }
 
 @end
