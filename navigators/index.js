@@ -1,3 +1,4 @@
-import ConnectedAppNavigator, { AppNavigator } from './AppNavigator';
-
-export { ConnectedAppNavigator, AppNavigator };
+export AppNavigator from "./AppNavigator";
+export RootNavigator from "./RootNavigator";
+export TabNavigator from "./TabNavigator";
+export AuthNavigator from "./AuthNavigator";

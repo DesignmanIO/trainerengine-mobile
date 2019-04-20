@@ -1,15 +1,14 @@
 import { createBottomTabNavigator } from 'react-navigation';
 
-import Messages from '../Views/Messages';
-import Tasks from '../Views/Tasks';
-import More from '../Views/More';
+import { More, Tasks, Messages } from '~/Views';
 import { colors } from '../Config/Theme';
+import Store from '~/redux';
 
 const MainNavigator = createBottomTabNavigator(
   {
-    Tasks: { screen: Tasks },
-    Messages: { screen: Messages },
-    More: { screen: More },
+    Tasks,
+    Messages,
+    More,
   },
   {
     swipeEnabled: false,

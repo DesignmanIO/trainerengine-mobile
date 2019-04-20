@@ -24,7 +24,7 @@
  3. Link to https://github.com/adamwulf/PerformanceBezier
 
  */
-static CGFloat idealFlatness = .01;
+static CGFloat idealFlatness = (CGFloat).01;
 
 /**
  * returns the distance between two points
@@ -112,10 +112,63 @@ void RNSVGPerformanceBezier_addLine(CGPoint *last, const CGPoint *next, NSMutabl
     BOOL isClosed;
 }
 
+- (void)setHref:(NSString *)href
+{
+    if ([href isEqualToString:_href]) {
+        return;
+    }
+    [self invalidate];
+    _href = href;
+}
+
+- (void)setSide:(NSString *)side
+{
+    if ([side isEqualToString:_side]) {
+        return;
+    }
+    [self invalidate];
+    _side = side;
+}
+
+- (void)setMethod:(NSString *)method
+{
+    if ([method isEqualToString:_method]) {
+        return;
+    }
+    [self invalidate];
+    _method = method;
+}
+
+- (void)setMidLine:(NSString *)midLine
+{
+    if ([midLine isEqualToString:_midLine]) {
+        return;
+    }
+    [self invalidate];
+    _midLine = midLine;
+}
+
+- (void)setSpacing:(NSString *)spacing
+{
+    if ([spacing isEqualToString:_spacing]) {
+        return;
+    }
+    [self invalidate];
+    _spacing = spacing;
+}
+
+- (void)setStartOffset:(RNSVGLength *)startOffset
+{
+    if ([startOffset isEqualTo:_startOffset]) {
+        return;
+    }
+    [self invalidate];
+    _startOffset = startOffset;
+}
+
 - (void)getPathLength:(CGFloat*)lengthP lineCount:(NSUInteger*)lineCountP lengths:(NSArray* __strong *)lengthsP lines:(NSArray* __strong *)linesP isClosed:(BOOL*)isClosedP
 {
-    RNSVGSvgView *svg = [self getSvgView];
-    RNSVGNode *template = [svg getDefinedTemplate:self.href];
+    RNSVGNode *template = [self.svgView getDefinedTemplate:self.href];
     CGPathRef path = [template getPath:nil];
 
     if (_path != path) {
@@ -209,9 +262,9 @@ void RNSVGPerformanceBezier_addLine(CGPoint *last, const CGPoint *next, NSMutabl
     *linesP = lines;
 }
 
-- (void)renderLayerTo:(CGContextRef)context
+- (void)renderLayerTo:(CGContextRef)context rect:(CGRect)rect
 {
-    [self renderGroupTo:context];
+    [self renderGroupTo:context rect:rect];
 }
 
 - (CGPathRef)getPath:(CGContextRef)context

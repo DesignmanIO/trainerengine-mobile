@@ -2,6 +2,7 @@
 
 buildscript {
     repositories {
+        google()
         jcenter()
     }
     dependencies {
@@ -12,15 +13,19 @@ buildscript {
     }
 }
 
+def DEFAULT_COMPILE_SDK_VERSION             = 23
+def DEFAULT_BUILD_TOOLS_VERSION             = "25.0.0"
+def DEFAULT_TARGET_SDK_VERSION              = 22
+
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "25.0.0"
+    compileSdkVersion rootProject.hasProperty('compileSdkVersion') ? rootProject.compileSdkVersion : DEFAULT_COMPILE_SDK_VERSION
+    buildToolsVersion rootProject.hasProperty('buildToolsVersion') ? rootProject.buildToolsVersion : DEFAULT_BUILD_TOOLS_VERSION
 
     defaultConfig {
         minSdkVersion 16
-        targetSdkVersion 22
+        targetSdkVersion rootProject.hasProperty('targetSdkVersion') ? rootProject.targetSdkVersion : DEFAULT_TARGET_SDK_VERSION
         versionCode 1
     }
     lintOptions {
@@ -34,7 +39,7 @@ repositories {
 }
 
 dependencies {
-    compile 'com.facebook.react:react-native:+'
-    compile 'com.facebook.fresco:fresco:0.11.0'
-    compile 'me.relex:photodraweeview:1.0.0'
+    compileOnly 'com.facebook.react:react-native:+'
+    implementation 'com.facebook.fresco:fresco:0.11.0'
+    implementation 'me.relex:photodraweeview:1.0.0'
 }

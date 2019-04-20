@@ -2,10 +2,10 @@ import React from 'react';
 import { createStackNavigator, addNavigationHelpers } from 'react-navigation';
 import { connectStyle } from '@shoutem/theme';
 import { View } from '@shoutem/ui';
-import { navListener } from '../redux';
 import { connect } from 'react-redux';
 
-import TabNavigator from './TabNavigator';
+import { navListener } from '../redux';
+import { TabNavigator } from '~/navigators';
 
 const AppNavigator = createStackNavigator(
   {

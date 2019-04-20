@@ -60,15 +60,19 @@ features Image has (the goal is to be fully compaitable with Image and support a
 ## Automatic installation
 
 Just two simple steps:
-```
+
+```console
 npm install --save react-native-photo-view
 ```
-```
-rnpm link react-native-photo-view
+
+```console
+react-native link react-native-photo-view
 ```
 
 ## Manual installation
 
+
+### Android
 1. Add these lines to `android/settings.gradle`
 ```
 include ':react-native-photo-view'
@@ -104,3 +108,11 @@ public class MainActivity extends ReactActivity {
     // ...
 }
 ```
+
+### IOS
+1. Add this line to your podfile
+```
+  pod 'react-native-photo-view', path: './node_modules/react-native-photo-view'
+```
+
+2. Run `pod install`

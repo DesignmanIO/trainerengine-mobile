@@ -37,10 +37,11 @@ function loadBabelConfig(config = {}) {
         return p === 'babel-plugin-root-import';
     });
     if (Array.isArray(pluginConfig)) {
-        if (Array.isArray(pluginConfig[1])) {
-            return pluginConfig[1].map(conf => Object.assign({}, defaultConfig, conf));
+        const paths = Array.isArray(pluginConfig[1]) ? pluginConfig[1] : (pluginConfig[1].paths || pluginConfig[1]);
+        if (Array.isArray(paths)) {
+            return paths.map(conf => Object.assign({}, defaultConfig, conf));
         }
-        return [Object.assign({}, defaultConfig, pluginConfig[1])];
+        return [Object.assign({}, defaultConfig, paths)];
     }
     return [defaultConfig];
 }
