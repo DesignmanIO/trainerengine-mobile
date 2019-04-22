@@ -9,7 +9,8 @@ import RootNavigator from "./navigators/RootNavigator";
 import Store from "./redux";
 import startup from "./startup";
 
-Meteor.connect("wss://app.trainerengine.com/websocket");
+// Meteor.connect("wss://app.trainerengine.com/websocket");
+Meteor.connect("ws://localhost:3000/websocket");
 
 export default class App extends Component {
   constructor(props) {

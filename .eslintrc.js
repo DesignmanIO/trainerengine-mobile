@@ -5,12 +5,15 @@ module.exports = {
     ecmaFeatures: {
       jsx: true,
       modules: true,
+      experimentalDecorators: true,
+      experimentalObjectRestSpread: true,
     },
   },
   extends: 'airbnb',
   plugins: ['react', 'jsx-a11y', 'import'],
   rules: {
     'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
+    'arrow-parens': [2, 'as-needed', { requireForBlockBody: false }],
   },
   settings: {
     'import/resolver': {

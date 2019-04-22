@@ -4,7 +4,7 @@ export default {
   'Rubik-Medium': require('~/node_modules/@shoutem/ui/fonts/Rubik-Medium.ttf'),
   'Rubik-Bold': require('~/node_modules/@shoutem/ui/fonts/Rubik-Bold.ttf'),
   'rubicon-icon-font': require('~/node_modules/@shoutem/ui/fonts/rubicon-icon-font.ttf'),
-  'simple-line-icons': require('~/node_modules/@expo/vector-icons/fonts/SimpleLineIcons.ttf'),
+  // 'simple-line-icons': require('~/node_modules/@expo/vector-icons/fonts/SimpleLineIcons.ttf'),
   // 'Museo-Bold': require('./museosans-500.ttf'),
   // 'Museo-Regular': require('./museosans-300.ttf'),
   // 'Museo-Light': require('./museosans-100.ttf'),

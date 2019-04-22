@@ -1,12 +1,17 @@
-import React, { Component } from "react";
-import { View, TextInput, Text, Button } from "@shoutem/ui";
+import React, { Component } from 'react';
+import { View, TextInput, Text, Button } from '@shoutem/ui';
+import { connect } from 'react-redux';
 
-import { renderIf } from "~/utils";
-import Store, { actions } from "~/redux";
+import { renderIf } from '~/utils';
+import Store, { userActions } from '~/redux';
 
+@connect(
+  null,
+  { logIn: userActions.logIn }
+)
 class Login extends Component {
   static navigationOptions = {
-    title: "Log In"
+    title: 'Log In',
   };
 
   constructor(props) {
@@ -14,18 +19,19 @@ class Login extends Component {
 
     this.state = {
       loggingIn: false,
-      email: "",
-      password: "",
+      email: '',
+      password: '',
       // vs logging in
       createAccount: false,
-      hidePassword: true
+      hidePassword: true,
     };
   }
 
   logIn() {
+    const { email, password } = this.state;
     this.setState({ loggingIn: true });
-    Store.dispatch(actions.setAuthToken("asdf"));
-    this.props.navigation.navigate("AuthLoading");
+    this.props.logIn({ email, password });
+    this.props.navigation.navigate('AuthLoading');
   }
 
   render() {
@@ -35,7 +41,7 @@ class Login extends Component {
       confirmPassword,
       loggingIn,
       createAccount,
-      hidePassword
+      hidePassword,
     } = this.state;
 
     return (
@@ -63,9 +69,11 @@ class Login extends Component {
               secureTextEntry={hidePassword}
             />
           )()}
-          <Text onPress={() => this.setState({ hidePassword: !hidePassword })}>
-            {`${hidePassword ? "Show" : "Hide"} password`}
-          </Text>
+          <Button
+            onPress={() => this.setState({ hidePassword: !hidePassword })}
+          >
+            <Text>{`${hidePassword ? 'Show' : 'Hide'} password`}</Text>
+          </Button>
         </View>
         <View>
           <Button onPress={() => this.logIn()} styleName="sm-gutter-bottom">

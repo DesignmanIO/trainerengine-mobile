@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {GiftedChat, Bubble} from 'react-native-gifted-chat';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Icon from 'react-native-vector-icons/SimpleLineIcons';
 import {connectStyle} from '@shoutem/theme';
 
 import {navigationOptions} from '../../Config/Theme';
@@ -10,7 +10,7 @@ class Messages extends Component {
         ...navigationOptions,
         title: "Messages",
         tabBarIcon: ({tintColor}) =>  (
-          <Icon name="ios-chatbubbles-outline" size={20} color={tintColor}/>
+          <Icon name="bubbles" size={20} color={tintColor}/>
         ),
       }
 

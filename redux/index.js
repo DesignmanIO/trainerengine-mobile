@@ -1,27 +1,52 @@
 import { Constants } from 'expo';
-import { createStore, combineReducers, applyMiddleware } from 'redux';
-import thunk from 'redux-thunk';
-import { persistStore, persistReducer } from 'redux-persist';
+import { createStore, combineReducers } from 'redux';
+// import thunk from 'redux-thunk';
+import { persistStore, persistReducer, createMigrate } from 'redux-persist';
 import createEncryptor from 'redux-persist-transform-encrypt';
 import { AsyncStorage } from 'react-native';
 import { btoa } from 'Base64';
+import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
+import thunkSubscribe from 'redux-thunk-subscribe';
 
 import appState from './appState';
 import userState from './userState';
-import actions from './actions';
+import userActions from './userActions';
+import appActions from './appActions';
 import C from './actionTypes';
 
-const Store = createStore(persistReducer(
-    { key: 'root', storage: AsyncStorage },
-    combineReducers({appState, userState}),
-    applyMiddleware(thunk),
-  ),
+// encrypt stored state with hashed device ID
+const encryptor = createEncryptor({
+  secretKey: btoa(Constants.deviceId),
+  onError(err) {
+    console.warn(err);
+  },
+});
+
+const migrate = createMigrate(
+  {
+    0: state => ({
+      ...state,
+    }),
+  },
+  { debug: true }
 );
 
-// encrypt stored state with hashed device ID
-const encryptor = createEncryptor({ secretKey: btoa(Constants.deviceId) });
+const Store = createStore(
+  persistReducer(
+    {
+      key: 'root',
+      storage: AsyncStorage,
+      blacklist: ['appState'],
+      transforms: [encryptor],
+      version: 0,
+      stateReconciler: autoMergeLevel2,
+    },
+    combineReducers({ appState, userState }),
+  ),
+  thunkSubscribe,
+);
 
-const persister = persistStore(Store);
+const persister = persistStore(Store, () => Store.dispatch(reduxReady()));
 
 export default Store;
-export { persister, actions, C };
+export { persister, userActions, C };

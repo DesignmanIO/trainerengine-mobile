@@ -1,4 +1,4 @@
-import { createSwitchNavigator } from 'react-navigation';
+import { createSwitchNavigator, createAppContainer } from 'react-navigation';
 import { connect } from 'react-redux';
 
 import AppNavigator from './AppNavigator';
@@ -18,4 +18,6 @@ const RootNavigator = createSwitchNavigator(
   },
 );
 
-export default RootNavigator;
+const AppContainer = createAppContainer(RootNavigator);
+
+export default AppContainer;

@@ -6,17 +6,5 @@
   ],
   "presets": [
     "babel-preset-expo"
-  ],
-  "env": {
-    "development": {
-      "plugins": [
-        "transform-react-jsx-source"
-      ]
-    },
-    "production": {
-      "plugins": [
-        "babel-plugin-root-import"
-      ]
-    }
-  }
+  ]
 }
