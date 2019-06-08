@@ -25,7 +25,7 @@
   return @{@"path": [NSNull null]};
 }
 
-/// Local interpolators have changed. Update layer specific properties.
+/// Local interpolatores have changed. Update layer specific properties.
 - (void)performLocalUpdate {
   
 }

@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
-import { View, TextInput, Text, Button } from '@shoutem/ui';
+import { View, TextInput, Text, Button, Image } from 'react-native';
 import { connect } from 'react-redux';
 
 import { renderIf } from '~/utils';
 import Store, { userActions } from '~/redux';
+import images from '~/assets/images';
 
 @connect(
   null,
-  { logIn: userActions.logIn }
+  { logIn: userActions.logIn },
 )
 class Login extends Component {
   static navigationOptions = {
@@ -27,25 +28,21 @@ class Login extends Component {
     };
   }
 
-  logIn() {
+  async logIn() {
     const { email, password } = this.state;
     this.setState({ loggingIn: true });
-    this.props.logIn({ email, password });
-    this.props.navigation.navigate('AuthLoading');
+    const loggedIn = await this.props.logIn({ email, password });
+    if (loggedIn) {
+      this.props.navigation.navigate('AuthLoading');
+    }
   }
 
   render() {
-    const {
-      email,
-      password,
-      confirmPassword,
-      loggingIn,
-      createAccount,
-      hidePassword,
-    } = this.state;
+    const { email, password, confirmPassword, loggingIn, createAccount, hidePassword } = this.state;
 
     return (
-      <View styleName="flexible vertical stretch space-around md-gutter-horizontal">
+      <View styleName="flexible vertical h-center space-around md-gutter-horizontal">
+        <Image source={images.logoVertical} styleName="large-banner" />
         <View styleName="stretch">
           <TextInput
             placeholder="Email"
@@ -67,11 +64,9 @@ class Login extends Component {
               value={confirmPassword}
               onChangeText={text => this.setState({ confirmPassword: text })}
               secureTextEntry={hidePassword}
-            />
+            />,
           )()}
-          <Button
-            onPress={() => this.setState({ hidePassword: !hidePassword })}
-          >
+          <Button onPress={() => this.setState({ hidePassword: !hidePassword })}>
             <Text>{`${hidePassword ? 'Show' : 'Hide'} password`}</Text>
           </Button>
         </View>
@@ -79,11 +74,7 @@ class Login extends Component {
           <Button onPress={() => this.logIn()} styleName="sm-gutter-bottom">
             <Text>Log In</Text>
           </Button>
-          <Text
-            onPress={() => this.setState({ createAccount: !createAccount })}
-          >
-            Or register
-          </Text>
+          <Text onPress={() => this.setState({ createAccount: !createAccount })}>Or register</Text>
         </View>
       </View>
     );

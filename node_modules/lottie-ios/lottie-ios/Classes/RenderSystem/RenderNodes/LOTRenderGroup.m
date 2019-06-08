@@ -30,7 +30,7 @@
   LOTBezierPath *_localPath;
   BOOL _rootNodeHasUpdate;
   LOTNumberInterpolator *_opacityInterpolator;
-  LOTTransformInterpolator *_transformInterpolator;
+  LOTTransformInterpolator *_transformInterolator;
 }
 
 - (instancetype _Nonnull)initWithInputNode:(LOTAnimatorNode * _Nullable)inputNode
@@ -47,18 +47,18 @@
 }
 
 - (NSDictionary *)valueInterpolators {
-  if (_opacityInterpolator && _transformInterpolator) {
+  if (_opacityInterpolator && _transformInterolator) {
     return @{@"Opacity" : _opacityInterpolator,
-             @"Position" : _transformInterpolator.positionInterpolator,
-             @"Scale" : _transformInterpolator.scaleInterpolator,
-             @"Rotation" : _transformInterpolator.scaleInterpolator,
-             @"Anchor Point" : _transformInterpolator.anchorInterpolator,
+             @"Position" : _transformInterolator.positionInterpolator,
+             @"Scale" : _transformInterolator.scaleInterpolator,
+             @"Rotation" : _transformInterolator.scaleInterpolator,
+             @"Anchor Point" : _transformInterolator.anchorInterpolator,
              // Deprecated
              @"Transform.Opacity" : _opacityInterpolator,
-             @"Transform.Position" : _transformInterpolator.positionInterpolator,
-             @"Transform.Scale" : _transformInterpolator.scaleInterpolator,
-             @"Transform.Rotation" : _transformInterpolator.scaleInterpolator,
-             @"Transform.Anchor Point" : _transformInterpolator.anchorInterpolator
+             @"Transform.Position" : _transformInterolator.positionInterpolator,
+             @"Transform.Scale" : _transformInterolator.scaleInterpolator,
+             @"Transform.Rotation" : _transformInterolator.scaleInterpolator,
+             @"Transform.Anchor Point" : _transformInterolator.anchorInterpolator
              };
   }
   return nil;
@@ -122,7 +122,7 @@
   }
   if (transform) {
     _opacityInterpolator = [[LOTNumberInterpolator alloc] initWithKeyframes:transform.opacity.keyframes];
-    _transformInterpolator = [[LOTTransformInterpolator alloc] initWithPosition:transform.position.keyframes
+    _transformInterolator = [[LOTTransformInterpolator alloc] initWithPosition:transform.position.keyframes
                                                                       rotation:transform.rotation.keyframes
                                                                         anchor:transform.anchor.keyframes
                                                                          scale:transform.scale.keyframes];
@@ -132,7 +132,7 @@
 
 - (BOOL)needsUpdateForFrame:(NSNumber *)frame {
   return ([_opacityInterpolator hasUpdateForFrame:frame] ||
-          [_transformInterpolator hasUpdateForFrame:frame] ||
+          [_transformInterolator hasUpdateForFrame:frame] ||
           _rootNodeHasUpdate);
 
 }
@@ -149,8 +149,8 @@
   if (_opacityInterpolator) {
     self.containerLayer.opacity = [_opacityInterpolator floatValueForFrame:self.currentFrame];
   }
-  if (_transformInterpolator) {
-    CATransform3D xform = [_transformInterpolator transformForFrame:self.currentFrame];
+  if (_transformInterolator) {
+    CATransform3D xform = [_transformInterolator transformForFrame:self.currentFrame];
     self.containerLayer.transform = xform;
     
     CGAffineTransform appliedXform = CATransform3DGetAffineTransform(xform);

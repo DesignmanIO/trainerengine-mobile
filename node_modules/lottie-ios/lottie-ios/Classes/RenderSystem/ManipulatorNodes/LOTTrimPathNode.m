@@ -63,7 +63,7 @@
     if ([inputNode isKindOfClass:[LOTPathAnimator class]] ||
         [inputNode isKindOfClass:[LOTCircleAnimator class]] ||
         [inputNode isKindOfClass:[LOTRoundedRectAnimator class]]) {
-      [inputNode.localPath trimPathFromT:self->_startT toT:self->_endT offset:self->_offsetT];
+      [inputNode.localPath trimPathFromT:_startT toT:_endT offset:_offsetT];
     }
     if (modifier) {
       modifier(inputNode);

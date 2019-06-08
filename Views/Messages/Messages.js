@@ -1,65 +1,76 @@
-import React, {Component} from 'react';
-import {GiftedChat, Bubble} from 'react-native-gifted-chat';
+import React, { Component } from 'react';
+import { GiftedChat, Bubble } from 'react-native-gifted-chat';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
-import {connectStyle} from '@shoutem/theme';
+import Meteor, { withTracker } from 'react-native-meteor';
 
-import {navigationOptions} from '../../Config/Theme';
+import { navigationOptions } from '../../Config/Theme';
 
 class Messages extends Component {
-      static navigationOptions = {
-        ...navigationOptions,
-        title: "Messages",
-        tabBarIcon: ({tintColor}) =>  (
-          <Icon name="bubbles" size={20} color={tintColor}/>
-        ),
-      }
+  static navigationOptions = {
+    ...navigationOptions,
+    title: 'Messages',
+    tabBarIcon: ({ tintColor }) => <Icon name="bubbles" size={20} color={tintColor} />,
+  };
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            messages: []
-        };
-        this.onSend = this.onSend.bind(this);
-    }
+  constructor(props) {
+    super(props);
+    this.state = {
+      messages: [],
+    };
+    this.onSend = this.onSend.bind(this);
+  }
 
-    componentWillMount() {
-        this.setState({
-            messages: [{
-                _id: 1,
-                text: 'Hello developer',
-                createdAt: new Date(Date.UTC(2016, 7, 30, 17, 20, 0)),
-                user: {
-                    _id: 2,
-                    name: 'React Native',
-                    avatar: 'https://facebook.github.io/react/img/logo_og.png',
-                },
-            }, ],
-        });
-    }
-    onSend(messages = []) {
-        this.setState((previousState) => {
-            return {
-                messages: GiftedChat.append(previousState.messages, messages),
-            };
-        });
-    }
-    render() {
-      const {style} = this.props;
-        //return <View />
-        return (
-          <GiftedChat
-            messages = {this.state.messages}
-            onSend = {this.onSend}
-            user = {{_id: 1,}}
-            renderBubble = {(props) => {
-              // console.log('props', props);
-              return (
-                <Bubble {...props} wrapperStyle={style.messageWrapper}/>
-              );
-            }}
-          />
-        );
-    }
+  componentWillMount() {
+    this.setState({
+      messages: [
+        {
+          _id: 1,
+          text: 'Hello developer',
+          createdAt: new Date(Date.UTC(2016, 7, 30, 17, 20, 0)),
+          user: {
+            _id: 2,
+            name: 'React Native',
+            avatar: 'https://facebook.github.io/react/img/logo_og.png',
+          },
+        },
+      ],
+    });
+  }
+  onSend(messages = []) {
+    this.setState(previousState => {
+      return {
+        messages: GiftedChat.append(previousState.messages, messages),
+      };
+    });
+  }
+  render() {
+    const { style, messages, messagesHandle } = this.props;
+    //return <View />
+    console.log(messages, messagesHandle.ready())
+    return (
+      <GiftedChat
+        messages={messages.map(message => ({
+          text: message.message,
+          ...message
+        }))}
+        onSend={this.onSend}
+        user={{ _id: 1 }}
+        renderBubble={props => {
+          // console.log('props', props);
+          return <Bubble {...props} wrapperStyle={style.messageWrapper} />;
+        }}
+      />
+    );
+  }
 }
 
-export default connectStyle('te.views.Messages', {})(Messages);
+export default withTracker(() => {
+  const messagesHandle = Meteor.subscribe('myMessages');
+  const myDataHandle = Meteor.subscribe('myData');
+  const messages = Meteor.collection('messages').find();
+  return {
+    messagesHandle,
+    messages,
+    myDataHandle,
+  };
+})(Messages);

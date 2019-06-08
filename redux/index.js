@@ -1,4 +1,4 @@
-import { Constants } from 'expo';
+import Constants from 'expo-constants';
 import { createStore, combineReducers } from 'redux';
 // import thunk from 'redux-thunk';
 import { persistStore, persistReducer, createMigrate } from 'redux-persist';

@@ -1,19 +1,18 @@
-import React, {Component} from 'react';
-import {View} from '@shoutem/ui';
+import React, { Component } from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {ListView} from '@shoutem/ui';
 
-import {navigationOptions} from '../../Config/Theme';
+import { navigationOptions } from '../../Config/Theme';
 import Task from '../../Components/Task';
+import Meteor, { withTracker, MeteorListView } from 'react-native-meteor';
 
-class Tasks extends Component{
+class Tasks extends Component {
   static navigationOptions = {
     ...navigationOptions,
-    title: "Tasks",
-    tabBarIcon: ({tintColor}) => (
-      <Icon name="ios-checkmark-circle-outline" size={20} color={tintColor}/>
+    title: 'Tasks',
+    tabBarIcon: ({ tintColor }) => (
+      <Icon name="ios-checkmark-circle-outline" size={20} color={tintColor} />
     ),
-  }
+  };
 
   constructor(props) {
     super(props);
@@ -23,19 +22,27 @@ class Tasks extends Component{
     };
   }
 
-  allowScroll = (allowScroll) => {
-    this.setState({scrollEnabled: allowScroll});
-  }
+  allowScroll = allowScroll => {
+    this.setState({ scrollEnabled: allowScroll });
+  };
 
   render() {
+    console.log(this.props.tasks);
     return (
-      <ListView
-        data={[{title: 'tasktitle', _id: 1}]}
-        renderRow={(task) => <Task key={`task-${task._id}`} task={task} allowScroll={this.allowScroll}/>}
-        scrollEnabled={this.state.scrollEnabled}
+      <MeteorListView
+        collection="tasks"
+        selector={{ status: 'pending' }}
+        options={{ sort: { createdAt: -1 } }}
+        renderRow={task => (
+          <Task key={`task-${task._id}`} task={task} allowScroll={this.allowScroll} />
+        )}
       />
-    )
+    );
   }
 }
 
-export default Tasks;
+export default withTracker(() => {
+  const myDataHandle = Meteor.subscribe('myData');
+  const tasks = Meteor.collection('tasks').find();
+  return { myDataHandle, tasks };
+})(Tasks);

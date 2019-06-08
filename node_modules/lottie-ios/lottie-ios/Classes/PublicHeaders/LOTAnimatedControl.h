@@ -22,7 +22,7 @@
 
 - (void)setLayerName:(NSString * _Nonnull)layerName forState:(UIControlState)state;
 
-@property (nonatomic, strong, readonly, nonnull) LOTAnimationView *animationView;
-@property (nonatomic, strong, nullable) LOTComposition *animationComp;
+@property (nonatomic, readonly, nonnull) LOTAnimationView *animationView;
+@property (nonatomic, nullable) LOTComposition *animationComp;
 
 @end

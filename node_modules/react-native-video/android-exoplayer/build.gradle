@@ -7,6 +7,11 @@ def safeExtGet(prop, fallback) {
 android {
     compileSdkVersion safeExtGet('compileSdkVersion', 27)
     buildToolsVersion safeExtGet('buildToolsVersion', '27.0.3')
+ 
+    compileOptions {
+        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_8
+    }
 
     defaultConfig {
         minSdkVersion safeExtGet('minSdkVersion', 16)
@@ -17,11 +22,19 @@ android {
 }
 
 dependencies {
-    //noinspection GradleDynamicVersion
-    provided "com.facebook.react:react-native:${safeExtGet('reactNativeVersion', '+')}"
-    compile 'com.google.android.exoplayer:exoplayer:2.7.3'
-    compile('com.google.android.exoplayer:extension-okhttp:2.7.3') {
+    compileOnly "com.facebook.react:react-native:${safeExtGet('reactNativeVersion', '+')}"
+    implementation('com.google.android.exoplayer:exoplayer:2.9.3') {
+        exclude group: 'com.android.support'
+    }
+
+    // All support libs must use the same version
+    implementation "com.android.support:support-annotations:${safeExtGet('supportLibVersion', '+')}"
+    implementation "com.android.support:support-compat:${safeExtGet('supportLibVersion', '+')}"
+    implementation "com.android.support:support-media-compat:${safeExtGet('supportLibVersion', '+')}"
+
+    implementation('com.google.android.exoplayer:extension-okhttp:2.9.3') {
         exclude group: 'com.squareup.okhttp3', module: 'okhttp'
     }
-    compile 'com.squareup.okhttp3:okhttp:3.9.1'
+    implementation 'com.squareup.okhttp3:okhttp:3.12.1'
+
 }

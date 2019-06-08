@@ -1,10 +1,8 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'proptypes';
-import {Row, View} from '@shoutem/ui';
 import Swipeout from 'react-native-swipeout';
-import {Text} from 'react-native';
+import { View, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {connectStyle} from '@shoutem/theme';
 
 class Task extends Component {
   constructor(props) {
@@ -12,45 +10,48 @@ class Task extends Component {
 
     this.state = {
       swiperOpen: false,
-    }
+    };
   }
 
-markComplete = () => {
-  this.setState({swiperOpen: true});
-  setTimeout(() => {
-    this.setState({swiperOpen: false})
-    console.log('complete');
-  }, 300);
-}
+  markComplete = () => {
+    this.setState({ swiperOpen: true });
+    setTimeout(() => {
+      this.setState({ swiperOpen: false });
+      console.log('complete');
+    }, 300);
+  };
 
-  render(){
-  const {task, style, allowScroll} = this.props;
+  render() {
+    const { task, style, allowScroll } = this.props;
     return (
-        <Swipeout right={[
-            {
-              text: "Complete",
-              component: <Icon style={style.swipeoutIcon} name="ios-checkmark-circle-outline" size={20} />,
+      <Swipeout
+        right={[
+          {
+            text: 'Complete',
+            component: (
+              <Icon style={style.swipeoutIcon} name="ios-checkmark-circle-outline" size={20} />
+            ),
             backgroundColor: style.swipeout.backgroundColor,
-            },
-          ]}
-          style={style.swipeoutContainer}
-          scroll={(event) => allowScroll(event)}
-          onOpen={this.markComplete}
-          close={!this.state.swiperOpen}
-          autoClose
-        >
-          <Row style={style.taskRow}>
-            <Text>{task.title}</Text>
-          </Row>
-        </Swipeout>
-    )
-}
+          },
+        ]}
+        style={style.swipeoutContainer}
+        scroll={event => allowScroll(event)}
+        onOpen={this.markComplete}
+        close={!this.state.swiperOpen}
+        autoClose
+      >
+        <View style={style.taskRow}>
+          <Text>{task.title}</Text>
+        </View>
+      </Swipeout>
+    );
+  }
 }
 
 Task.propTypes = {
   task: PropTypes.object,
   style: PropTypes.object,
   allowScroll: PropTypes.func,
-}
+};
 
-export default connectStyle('te.component.Task', {})(Task);
+export default Task;

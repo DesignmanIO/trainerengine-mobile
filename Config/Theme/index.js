@@ -1,6 +1,9 @@
-import Theme from './Theme';
+import theme from './theme';
+import useTheme, { ThemeContext, ThemeProvider } from './ThemeProvider';
 import colors from './colors';
 import navigationOptions from './navigationOptions';
 
-export {colors, navigationOptions};
-export default Theme;
+export {
+  colors, navigationOptions, ThemeContext, ThemeProvider, theme,
+};
+export default useTheme;

@@ -1,5 +1,7 @@
 const images = {
-  logoSq500: require('./TrainerEngineLogoV3SQ500.png'),
+  icon: require('./Icon1024.png'),
+  logo: require('./CoachfulnessLogo.png'),
+  logoVertical: require('./CoachfulnessLogoVertical.png'),
 };
 
 export default images;

@@ -1,35 +1,22 @@
-import React, { Component } from 'react';
+import React, { Component, useEffect } from 'react';
+import Meteor, { withTracker } from 'react-native-meteor';
 import { connect } from 'react-redux';
-import { Spinner, View } from '@shoutem/ui';
+import { Spinner, View } from 'react-native';
 
-class AuthLoading extends Component {
-  constructor(props) {
-    super(props);
-
-    this.navigateNext();
-    this.navigateNext = this.navigateNext.bind(this);
+const AuthLoading = ({ loggingIn, navigation, userId }) => {
+  if (!loggingIn) {
+    navigation.navigate(userId ? 'AppNavigator' : 'AuthNavigator');
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (this.props.userState !== nextProps.userState) {
-      this.navigateNext();
-    }
-  }
+  return (
+    <View styleName="flexible vertical h-center v-center">
+      <Spinner style={{ color: 'black', size: 'large' }} />
+    </View>
+  );
+};
 
-  navigateNext() {
-    const { navigation, userState } = this.props;
-    console.log(userState);
-    navigation.navigate(userState.authToken ? 'AppNavigator' : 'AuthNavigator');
-    // navigation.navigate('Auth');
-  }
-
-  render() {
-    return (
-      <View styleName="flexible vertical h-center v-center">
-        <Spinner style={{ color: 'black', size: 'large' }} />
-      </View>
-    );
-  }
-}
-
-export default connect(({ userState }) => ({ userState }))(AuthLoading);
+export default withTracker(() => ({
+  userId: Meteor.userId(),
+  status: Meteor.status(),
+  loggingIn: Meteor.loggingIn(),
+}))(AuthLoading);

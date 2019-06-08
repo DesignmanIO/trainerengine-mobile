@@ -1,7 +1,6 @@
 import React from 'react';
 import { createStackNavigator, addNavigationHelpers } from 'react-navigation';
-import { connectStyle } from '@shoutem/theme';
-import { View } from '@shoutem/ui';
+import { View } from 'react-native';
 import { connect } from 'react-redux';
 
 import { navListener } from '../redux';

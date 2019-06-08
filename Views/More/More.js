@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Row, TouchableOpacity, Button } from '@shoutem/ui';
+import { View, TouchableOpacity, Button } from 'react-native';
 import { Text } from 'react-native';
 import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -9,11 +9,9 @@ import Store, { userActions } from '~/redux';
 
 const More = ({ logOut }) => (
   <View>
-    <Row>
-      <Button onPress={() => logOut()}>
-        <Text>Log Out</Text>
-      </Button>
-    </Row>
+    <Button onPress={() => logOut()}>
+      <Text>Log Out</Text>
+    </Button>
   </View>
 );
 
