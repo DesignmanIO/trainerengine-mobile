@@ -1,18 +1,17 @@
 import React, { Component } from 'react';
-import { View, TextInput, Text, Button, Image } from 'react-native';
+import { View, Image, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 
-import { renderIf } from '~/utils';
-import Store, { userActions } from '~/redux';
-import images from '~/assets/images';
+import { Text, TextInput } from '../../Components';
+import { renderIf } from '../../utils';
+import { userActions } from '../../redux';
+import images from '../../assets/images';
+import { withTheme } from '../../Config/Theme';
 
-@connect(
-  null,
-  { logIn: userActions.logIn },
-)
 class Login extends Component {
   static navigationOptions = {
     title: 'Log In',
+    headerMode: 'none',
   };
 
   constructor(props) {
@@ -38,21 +37,24 @@ class Login extends Component {
   }
 
   render() {
-    const { email, password, confirmPassword, loggingIn, createAccount, hidePassword } = this.state;
+    const { email, password, confirmPassword, createAccount, hidePassword } = this.state;
+    const {
+      theme: { image, margin, align, flex, button },
+    } = this.props;
 
     return (
-      <View styleName="flexible vertical h-center space-around md-gutter-horizontal">
-        <Image source={images.logoVertical} styleName="large-banner" />
-        <View styleName="stretch">
+      <View style={[flex, align.between, margin.lg]}>
+        <Image source={images.logoVertical} style={[image.fill, { height: 300 }]} />
+        <View style={[align.stretch, margin.v.sm]}>
           <TextInput
             placeholder="Email"
-            styleName="sm-gutter-bottom"
+            style={margin.bottom.sm}
             value={email}
             onChangeText={text => this.setState({ email: text })}
           />
           <TextInput
             placeholder="Password"
-            styleName="sm-gutter-bottom"
+            style={margin.bottom.sm}
             value={password}
             onChangeText={text => this.setState({ password: text })}
             secureTextEntry={hidePassword}
@@ -66,19 +68,33 @@ class Login extends Component {
               secureTextEntry={hidePassword}
             />,
           )()}
-          <Button onPress={() => this.setState({ hidePassword: !hidePassword })}>
+          <TouchableOpacity onPress={() => this.setState({ hidePassword: !hidePassword })}>
             <Text>{`${hidePassword ? 'Show' : 'Hide'} password`}</Text>
-          </Button>
+          </TouchableOpacity>
         </View>
         <View>
-          <Button onPress={() => this.logIn()} styleName="sm-gutter-bottom">
-            <Text>Log In</Text>
-          </Button>
-          <Text onPress={() => this.setState({ createAccount: !createAccount })}>Or register</Text>
+          <TouchableOpacity
+            style={[button.defaultStyle, margin.bottom.sm]}
+            onPress={() => this.logIn()}
+            styleName="sm-gutter-bottom"
+          >
+            <Text style={button.text}>Log In</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[button.defaultStyle]}
+            onPress={() => this.setState({ createAccount: !createAccount })}
+          >
+            <Text style={button.text}>Or register</Text>
+          </TouchableOpacity>
         </View>
       </View>
     );
   }
 }
 
-export default Login;
+export default withTheme(
+  connect(
+    null,
+    { logIn: userActions.logIn },
+  )(Login),
+);

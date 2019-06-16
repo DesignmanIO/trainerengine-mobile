@@ -4,7 +4,7 @@ import { View } from 'react-native';
 import { connect } from 'react-redux';
 
 import { navListener } from '../redux';
-import { TabNavigator } from '~/navigators';
+import TabNavigator from './TabNavigator';
 
 const AppNavigator = createStackNavigator(
   {
@@ -12,9 +12,9 @@ const AppNavigator = createStackNavigator(
   },
   {
     mode: 'modal',
-    navigationOptions: {
-      header: null,
-    },
+    // headerMode: 'none',
+    // navigationOptions: {
+    // },
   },
 );
 

@@ -3,10 +3,7 @@
     "target": "ES6",
     "module": "commonjs",
     "allowSyntheticDefaultImports": true,
-    "baseUrl": "./",
-    "paths": {
-      "~/*": ["./*"]
-    }
+    "baseUrl": "./"
   },
   "exclude": [
     "build",

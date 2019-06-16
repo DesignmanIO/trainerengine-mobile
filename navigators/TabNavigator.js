@@ -1,8 +1,8 @@
 import { createBottomTabNavigator } from 'react-navigation';
 
-import { More, Tasks, Messages } from '~/Views';
+import { More, Tasks, Messages } from '../Views';
 import { colors } from '../Config/Theme';
-import Store from '~/redux';
+import Store from '../redux';
 
 const MainNavigator = createBottomTabNavigator(
   {

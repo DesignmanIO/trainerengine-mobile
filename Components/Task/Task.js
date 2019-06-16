@@ -1,52 +1,46 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'proptypes';
 import Swipeout from 'react-native-swipeout';
 import { View, Text } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Icon from 'react-native-vector-icons/AntDesign';
+import useTheme from '../../Config/Theme';
 
-class Task extends Component {
-  constructor(props) {
-    super(props);
+const Task = ({ task, onMarkComplete, allowScroll }) => {
+  const [swiperOpen, toggleSwiperOpen] = useState(false);
+  const {
+    swipeout, text, debug, align,
+  } = useTheme();
 
-    this.state = {
-      swiperOpen: false,
-    };
-  }
-
-  markComplete = () => {
-    this.setState({ swiperOpen: true });
+  const markComplete = () => {
+    toggleSwiperOpen(true);
     setTimeout(() => {
-      this.setState({ swiperOpen: false });
+      onMarkComplete(task._id);
+      toggleSwiperOpen(false);
       console.log('complete');
     }, 300);
   };
 
-  render() {
-    const { task, style, allowScroll } = this.props;
-    return (
-      <Swipeout
-        right={[
-          {
-            text: 'Complete',
-            component: (
-              <Icon style={style.swipeoutIcon} name="ios-checkmark-circle-outline" size={20} />
-            ),
-            backgroundColor: style.swipeout.backgroundColor,
-          },
-        ]}
-        style={style.swipeoutContainer}
-        scroll={event => allowScroll(event)}
-        onOpen={this.markComplete}
-        close={!this.state.swiperOpen}
-        autoClose
-      >
-        <View style={style.taskRow}>
-          <Text>{task.title}</Text>
-        </View>
-      </Swipeout>
-    );
-  }
-}
+  return (
+    <Swipeout
+      right={[
+        {
+          text: 'Complete',
+          component: <Icon style={swipeout.icon} name="check-circle" size={20} />,
+          backgroundColor: swipeout.backgroundColor,
+        },
+      ]}
+      style={swipeout.container}
+      scroll={event => allowScroll(event)}
+      onOpen={() => markComplete()}
+      close={!swiperOpen}
+      autoClose
+    >
+      <View style={[swipeout.row, align.vertical, align.center, align.middle]}>
+        <Text style={[text.subtle]}>{task.name}</Text>
+      </View>
+    </Swipeout>
+  );
+};
 
 Task.propTypes = {
   task: PropTypes.object,

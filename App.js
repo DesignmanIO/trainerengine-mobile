@@ -12,9 +12,9 @@ import startup from './startup';
 Meteor.connect('ws://localhost:3000/websocket');
 
 export default class App extends Component {
-  constructor(props) {
-    super(props);
-    
+  constructor() {
+    super();
+
     this.state = {
       loaded: false,
     };
@@ -26,6 +26,7 @@ export default class App extends Component {
   }
 
   render() {
+    const { loaded } = this.state;
     if (!loaded) return <AppLoading />;
     return (
       <Provider store={Store}>

@@ -4,8 +4,9 @@ export default {
   // 'Museo-Regular': require('./museosans-300.ttf'),
   // 'Museo-Light': require('./museosans-100.ttf'),
   // icomoon: require("../icons/icomoon.ttf"),
-  // "Montserrat-Extrabold": require("./Montserrat-ExtraBold.ttf"),
-  // "Montserrat-Light": require("./Montserrat-Light.ttf"),
-  // "Montserrat-Regular": require("./Montserrat-Regular.ttf"),
-  // "Montserrat-Bold": require("./Montserrat-Bold.ttf")
+  'Montserrat Extrabold': require('./Montserrat-ExtraBold.ttf'),
+  'Montserrat Light': require('./Montserrat-Light.ttf'),
+  'Montserrat Regular': require('./Montserrat-Regular.ttf'),
+  'Montserrat Bold': require('./Montserrat-Bold.ttf'),
+  'MPlus1': require('./MPLUS1p-Regular.ttf'),
 };

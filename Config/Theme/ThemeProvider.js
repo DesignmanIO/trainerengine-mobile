@@ -1,4 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
+import hoistStatics from 'hoist-non-react-statics';
+
 import getTheme from './theme';
 
 const defaultContext = {
@@ -8,6 +10,14 @@ const defaultContext = {
 
 const ThemeContext = React.createContext(defaultContext);
 const useTheme = () => useContext(ThemeContext);
+const withTheme = WrappedComponent => hoistStatics(
+  props => (
+    <ThemeContext.Consumer>
+      {value => <WrappedComponent {...props} theme={value} />}
+    </ThemeContext.Consumer>
+  ),
+  WrappedComponent,
+);
 
 const ThemeProvider = ({ children }) => {
   const [dark, setDark] = useState();
@@ -22,8 +32,8 @@ const ThemeProvider = ({ children }) => {
   });
 
   const theme = getTheme({ dark });
-  return <ThemeContext.Provider theme={theme}>{children}</ThemeContext.Provider>;
+  return <ThemeContext.Provider value={theme}>{children}</ThemeContext.Provider>;
 };
 
 export default useTheme;
-export { ThemeContext, ThemeProvider };
+export { ThemeContext, ThemeProvider, withTheme };

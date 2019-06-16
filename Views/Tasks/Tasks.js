@@ -34,7 +34,14 @@ class Tasks extends Component {
         selector={{ status: 'pending' }}
         options={{ sort: { createdAt: -1 } }}
         renderRow={task => (
-          <Task key={`task-${task._id}`} task={task} allowScroll={this.allowScroll} />
+          <Task
+            key={`task-${task._id}`}
+            task={task}
+            allowScroll={this.allowScroll}
+            onMarkComplete={taskId => {
+              Meteor.call('updateTaskStatus', taskId, 'done');
+            }}
+          />
         )}
       />
     );

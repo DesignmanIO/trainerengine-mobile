@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { GiftedChat, Bubble } from 'react-native-gifted-chat';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
 import Meteor, { withTracker } from 'react-native-meteor';
+import { View } from 'react-native';
 
 import { navigationOptions } from '../../Config/Theme';
 
@@ -45,13 +46,13 @@ class Messages extends Component {
   }
   render() {
     const { style, messages, messagesHandle } = this.props;
-    //return <View />
-    console.log(messages, messagesHandle.ready())
+    return <View />;
+    console.log(messages, messagesHandle.ready());
     return (
       <GiftedChat
         messages={messages.map(message => ({
           text: message.message,
-          ...message
+          ...message,
         }))}
         onSend={this.onSend}
         user={{ _id: 1 }}
