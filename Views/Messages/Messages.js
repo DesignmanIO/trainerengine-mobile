@@ -1,16 +1,14 @@
 import React, { Component } from 'react';
 import { GiftedChat, Bubble } from 'react-native-gifted-chat';
-import Icon from 'react-native-vector-icons/SimpleLineIcons';
+import Icon from '@expo/vector-icons/AntDesign';
 import Meteor, { withTracker } from 'react-native-meteor';
 import { View } from 'react-native';
-
-import { navigationOptions } from '../../Config/Theme';
+import hoistStatics from 'hoist-non-react-statics';
 
 class Messages extends Component {
   static navigationOptions = {
-    ...navigationOptions,
     title: 'Messages',
-    tabBarIcon: ({ tintColor }) => <Icon name="bubbles" size={20} color={tintColor} />,
+    tabBarIcon: ({ tintColor }) => <Icon name="message1" size={20} color={tintColor} />,
   };
 
   constructor(props) {
@@ -46,7 +44,7 @@ class Messages extends Component {
   }
   render() {
     const { style, messages, messagesHandle } = this.props;
-    return <View />;
+    // return <View />;
     console.log(messages, messagesHandle.ready());
     return (
       <GiftedChat
@@ -58,20 +56,23 @@ class Messages extends Component {
         user={{ _id: 1 }}
         renderBubble={props => {
           // console.log('props', props);
-          return <Bubble {...props} wrapperStyle={style.messageWrapper} />;
+          return <Bubble {...props} />;
         }}
       />
     );
   }
 }
 
-export default withTracker(() => {
-  const messagesHandle = Meteor.subscribe('myMessages');
-  const myDataHandle = Meteor.subscribe('myData');
-  const messages = Meteor.collection('messages').find();
-  return {
-    messagesHandle,
-    messages,
-    myDataHandle,
-  };
-})(Messages);
+export default hoistStatics(
+  withTracker(() => {
+    const messagesHandle = Meteor.subscribe('myMessages');
+    const myDataHandle = Meteor.subscribe('myData');
+    const messages = Meteor.collection('messages').find();
+    return {
+      messagesHandle,
+      messages,
+      myDataHandle,
+    };
+  })(Messages),
+  Messages,
+);

@@ -2,9 +2,9 @@ import React from 'react';
 import { View, TouchableOpacity, Text } from 'react-native';
 
 import { connect } from 'react-redux';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Icon from '@expo/vector-icons/AntDesign';
 
-import { navigationOptions } from '../../Config/Theme';
+// import { navigationOptions } from '../../Config/Theme';
 import Store, { userActions } from '../../redux';
 
 const More = ({ logOut }) => (
@@ -21,9 +21,9 @@ More.navigationOptions = () => {
     Store.getState().userState.authToken === 'asdfx',
   );
   return {
-    ...navigationOptions,
+    // ...navigationOptions,
     title: 'More',
-    tabBarIcon: ({ tintColor }) => <Icon name="ios-more" size={20} color={tintColor} />,
+    tabBarIcon: ({ tintColor }) => <Icon name="ellipsis1" size={20} color={tintColor} />,
     ...(Store.getState().userState.authToken === 'asdf'
       ? {
         tabBarButtonComponent: null,

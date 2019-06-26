@@ -14,7 +14,12 @@ const MainNavigator = createBottomTabNavigator(
     swipeEnabled: false,
     animationEnabled: true,
     tabBarOptions: {
-      activeTintColor: colors.purple,
+      showIcon: true,
+      inactiveTintColor: colors.grey,
+      activeTintColor: colors.blue,
+      style: {
+        height: 70,
+      },
     },
   },
 );

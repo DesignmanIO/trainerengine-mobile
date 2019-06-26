@@ -1,3 +1,5 @@
+import { StyleSheet, Dimensions } from 'react-native';
+
 import colors from './colors';
 
 const spacing = { sm: 10, md: 20, lg: 40 };
@@ -10,6 +12,10 @@ const getSpacingObj = key => ({
 
 const getTheme = ({ dark }) => ({
   dark,
+  constants: {
+    deviceX: Dimensions.get('window').width,
+    deviceY: Dimensions.get('window').height,
+  },
   button: {
     defaultStyle: {
       paddingTop: spacing.sm * 1.5,
@@ -43,26 +49,31 @@ const getTheme = ({ dark }) => ({
     subtitle: { fontSize: 24, lineHeight: 24, fontFamily: 'Montserrat Regular' },
     subtle: { color: colors.subtleText },
     caption: { fontSize: 12, lineHeight: 12, color: colors.subtleText },
+    center: { textAlign: 'center' },
+    strikethrough: { textDecorationLine: 'line-through' },
   },
   padding: {
     ...getSpacingObj('padding'),
     v: getSpacingObj('paddingVertical'),
     h: getSpacingObj('paddingHorizontal'),
-    top: getSpacingObj('paddingVertical'),
-    right: getSpacingObj('paddingHorizontal'),
-    bottom: getSpacingObj('paddingVertical'),
-    left: getSpacingObj('paddingHorizontal'),
+    top: getSpacingObj('paddingTop'),
+    right: getSpacingObj('paddingRight'),
+    bottom: getSpacingObj('paddingBottom'),
+    left: getSpacingObj('paddingLeft'),
   },
   margin: {
     ...getSpacingObj('margin'),
     v: getSpacingObj('marginVertical'),
     h: getSpacingObj('marginHorizontal'),
-    top: getSpacingObj('marginVertical'),
-    right: getSpacingObj('marginHorizontal'),
-    bottom: getSpacingObj('marginVertical'),
-    left: getSpacingObj('marginHorizontal'),
+    top: getSpacingObj('marginTop'),
+    right: getSpacingObj('marginRight'),
+    bottom: getSpacingObj('marginBottom'),
+    left: getSpacingObj('marginLeft'),
   },
   flex: { flex: 1 },
+  position: {
+    absoluteFill: StyleSheet.absoluteFillObject,
+  },
   align: {
     vertical: { flexDirection: 'column' },
     horizontal: { flexDirection: 'row' },
@@ -88,7 +99,7 @@ const getTheme = ({ dark }) => ({
       color: 'white',
       paddingTop: 35 / 2,
     },
-    backgroundColor: colors.success,
+    backgroundColor: colors.blue,
     container: {
       backgroundColor: 'white',
       borderWidth: 0.5,
