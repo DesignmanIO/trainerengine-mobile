@@ -41,7 +41,7 @@ const getTheme = ({ dark }) => ({
     defaultStyle: {
       fontFamily: 'MPlus1',
       fontSize: 17,
-      lineHeight: 17,
+      lineHeight: 17 * 1.2,
       color: colors.text,
     },
     bold: { fontFamily: 'Montserrat Bold' },

@@ -1,4 +1,4 @@
-import Meteor from 'react-native-meteor';
+import Meteor, { Accounts } from 'react-native-meteor';
 import { Alert } from 'react-native';
 
 import C from './actionTypes';
@@ -13,6 +13,20 @@ const userActions = {
         return false;
       }
       // dispatch({ type: 'NA' });
+      return true;
+    };
+  },
+  createAccount({ email, password, confirmPassword }) {
+    return async dispatch => {
+      if (password !== confirmPassword) {
+        Alert.alert("Passwords don't match");
+        return false;
+      }
+      const result = await new Promise(resolve => Accounts.createUser({ email, password }, (err, res) => resolve(err, res)));
+      if (result && result.error) {
+        Alert.alert('Sorry...', result.reason);
+        return false;
+      }
       return true;
     };
   },

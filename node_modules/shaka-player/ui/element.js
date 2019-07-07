@@ -32,22 +32,40 @@ shaka.ui.Element = class {
    * @param {!shaka.ui.Controls} controls
    */
   constructor(parent, controls) {
-    /** @protected {HTMLElement} */
+    /**
+     * @protected {HTMLElement}
+     * @exportInterface
+     */
     this.parent = parent;
 
-    /** @protected {shaka.ui.Controls} */
+    /**
+     * @protected {shaka.ui.Controls}
+     * @exportInterface
+     */
     this.controls = controls;
 
-    /** @protected {shaka.util.EventManager} */
+    /**
+     * @protected {shaka.util.EventManager}
+     * @exportInterface
+     */
     this.eventManager = new shaka.util.EventManager();
 
-    /** @protected {shaka.ui.Localization} */
+    /**
+     * @protected {shaka.ui.Localization}
+     * @exportInterface
+     */
     this.localization = this.controls.getLocalization();
 
-    /** @protected {shaka.Player} */
+    /**
+     * @protected {shaka.Player}
+     * @exportInterface
+     */
     this.player = this.controls.getPlayer();
 
-    /** @protected {HTMLMediaElement} */
+    /**
+     * @protected {HTMLMediaElement}
+     * @exportInterface
+     */
     this.video = this.controls.getVideo();
   }
 

@@ -2,8 +2,8 @@ import Expo, { AppLoading } from 'expo';
 import React, { Component } from 'react';
 import Meteor from 'react-native-meteor';
 import { Provider } from 'react-redux';
-// import PubNubReact from 'pubnub-react';
 
+import { PubNubProvider } from './Components/PubNubContext';
 import settings from './Config/settings';
 import Theme, { colors, ThemeProvider } from './Config/Theme';
 import RootNavigator from './navigators/RootNavigator';
@@ -15,11 +15,7 @@ export default class App extends Component {
   constructor() {
     super();
 
-    // this.pubnub = new PubNubReact({
-    //   publishKey: settings.pubNub.publishKey,
-    //   subscribeKey: settings.pubNub.subscribeKey,
-    // });
-    // this.pubnub.init(this);
+    this.pubNub = null;
 
     this.state = {
       loaded: false,
@@ -27,7 +23,8 @@ export default class App extends Component {
   }
 
   async componentDidMount() {
-    await startup();
+    const { pubNub } = await startup();
+    this.pubNub = pubNub;
     this.setState({ loaded: true });
   }
 
@@ -36,9 +33,11 @@ export default class App extends Component {
     if (!loaded) return <AppLoading />;
     return (
       <Provider store={Store}>
-        <ThemeProvider>
-          <RootNavigator />
-        </ThemeProvider>
+        <PubNubProvider pubNub={this.pubNub}>
+          <ThemeProvider>
+            <RootNavigator />
+          </ThemeProvider>
+        </PubNubProvider>
       </Provider>
     );
   }

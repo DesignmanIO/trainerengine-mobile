@@ -16,21 +16,22 @@
  */
 
 
+goog.provide('shakaDemo.CloseButton');
+
+
 /**
  * A custom UI button, to allow users to close the video element.
  * This cannot actually extend shaka.ui.Element, as that class does not exist
  * at load-time when in uncompiled mode.
- * @implements {shaka.extern.IUIElement}
+ * @extends {shaka.ui.Element}
  */
-class CloseButton {
+shakaDemo.CloseButton = class extends shaka.ui.Element {
   /**
    * @param {!HTMLElement} parent
    * @param {!shaka.ui.Controls} controls
    */
   constructor(parent, controls) {
-    /** @protected {!HTMLElement} */
-    this.parent = parent;
-
+    super(parent, controls);
     this.button_ = document.createElement('button');
     this.button_.classList.add('material-icons');
     this.button_.classList.add('close-button');
@@ -55,19 +56,19 @@ class CloseButton {
   destroy() {
     return Promise.resolve();
   }
-}
+};
 
 /**
  * @implements {shaka.extern.IUIElement.Factory}
  * @final
  */
-CloseButton.Factory = class {
+shakaDemo.CloseButton.Factory = class {
   /** @override */
   create(rootElement, controls) {
-    return new CloseButton(rootElement, controls);
+    return new shakaDemo.CloseButton(rootElement, controls);
   }
 };
 
-// This button is registered inside setup in ShakaDemoMain, rather than
+// This button is registered inside setup in shakaDemo.Main, rather than
 // statically here, since shaka.ui.Controls does not exist in this stage of the
 // load process.

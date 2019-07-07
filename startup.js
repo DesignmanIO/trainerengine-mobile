@@ -16,9 +16,6 @@ export default async function startup() {
   await Font.loadAsync(fonts);
   await Asset.loadAsync(_.map(images, image => image));
   const pubNub = new PubNub({ publishKey, subscribeKey });
-  pubNub.init();
-  // const connectycube = new ConnectyCube();
-  // connectycube.init(settings.connectyCube, { debug: { mode: 1 } });
   const meteor = Meteor.connect('ws://localhost:3000/websocket');
 
   return { meteor, pubNub };

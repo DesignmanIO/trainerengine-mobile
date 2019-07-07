@@ -36,6 +36,15 @@ class Login extends Component {
     }
   }
 
+  async createAccount() {
+    const { email, password, confirmPassword } = this.state;
+    this.setState({ loggingIn: true });
+    const loggedIn = await this.props.createAccount({ email, password, confirmPassword });
+    if (loggedIn) {
+      this.props.navigation.navigate('AuthLoading');
+    }
+  }
+
   render() {
     const { email, password, confirmPassword, createAccount, hidePassword } = this.state;
     const {
@@ -62,7 +71,7 @@ class Login extends Component {
           {renderIf.if(createAccount)(
             <TextInput
               placeholder="Confirm Password"
-              styleName="sm-gutter-bottom"
+              style={margin.bottom.sm}
               value={confirmPassword}
               onChangeText={text => this.setState({ confirmPassword: text })}
               secureTextEntry={hidePassword}
@@ -75,16 +84,16 @@ class Login extends Component {
         <View>
           <TouchableOpacity
             style={[button.defaultStyle, margin.bottom.sm]}
-            onPress={() => this.logIn()}
+            onPress={() => (createAccount ? this.createAccount() : this.logIn())}
             styleName="sm-gutter-bottom"
           >
-            <Text style={button.text}>Log In</Text>
+            <Text style={button.text}>{createAccount ? 'Create Account' : 'Log In'}</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={[button.defaultStyle]}
             onPress={() => this.setState({ createAccount: !createAccount })}
           >
-            <Text style={button.text}>Or register</Text>
+            <Text style={button.text}>{createAccount ? 'Or log in' : 'Or register'}</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -95,6 +104,6 @@ class Login extends Component {
 export default withTheme(
   connect(
     null,
-    { logIn: userActions.logIn },
+    { logIn: userActions.logIn, createAccount: userActions.createAccount },
   )(Login),
 );

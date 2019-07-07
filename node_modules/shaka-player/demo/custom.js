@@ -16,20 +16,23 @@
  */
 
 
-/** @type {?ShakaDemoCustom} */
+goog.provide('shakaDemo.Custom');
+
+
+/** @type {?shakaDemo.Custom} */
 let shakaDemoCustom;
 
 
 /**
  * Shaka Player demo, custom asset page layout.
  */
-class ShakaDemoCustom {
+shakaDemo.Custom = class {
   /**
    * Register the page configuration.
    */
   static init() {
     const container = shakaDemoMain.addNavButton('custom');
-    shakaDemoCustom = new ShakaDemoCustom(container);
+    shakaDemoCustom = new shakaDemo.Custom(container);
   }
 
   /** @param {!Element} container */
@@ -45,7 +48,7 @@ class ShakaDemoCustom {
     /** @private {!Set.<!ShakaDemoAssetInfo>} */
     this.assets_ = this.loadAssetInfos_();
 
-    /** @private {!Array.<!AssetCard>} */
+    /** @private {!Array.<!shakaDemo.AssetCard>} */
     this.assetCards_ = [];
     this.savedList_ = document.createElement('div');
     container.appendChild(this.savedList_);
@@ -120,7 +123,7 @@ class ShakaDemoCustom {
       if (licenseServerURL) {
         // Make a license server entry for every common DRM plugin.
         assetInProgress.licenseServers.clear();
-        for (const drmSystem of ShakaDemoMain.commonDrmSystems) {
+        for (const drmSystem of shakaDemo.Main.commonDrmSystems) {
           assetInProgress.licenseServers.set(drmSystem, licenseServerURL);
         }
         if (customDRMSystem) {
@@ -132,8 +135,8 @@ class ShakaDemoCustom {
       }
     };
 
-    const containerStyle = ShakaDemoInputContainer.Style.VERTICAL;
-    const container = new ShakaDemoInputContainer(
+    const containerStyle = shakaDemo.InputContainer.Style.VERTICAL;
+    const container = new shakaDemo.InputContainer(
         inputDiv, /* headerText = */ null, containerStyle,
         /* docLink = */ null);
 
@@ -145,7 +148,7 @@ class ShakaDemoCustom {
      */
     const makeField = (name, setup, onChange) => {
       container.addRow(null, null);
-      const input = new ShakaDemoTextInput(container, name, onChange);
+      const input = new shakaDemo.TextInput(container, name, onChange);
       input.extra().textContent = name;
       setup(input.input(), input.container());
     };
@@ -204,7 +207,7 @@ class ShakaDemoCustom {
       customDrmSystemInput = input;
       const drmSystems = assetInProgress.licenseServers.keys();
       for (const drmSystem of drmSystems) {
-        if (!ShakaDemoMain.commonDrmSystems.includes(drmSystem)) {
+        if (!shakaDemo.Main.commonDrmSystems.includes(drmSystem)) {
           input.value = drmSystem;
           break;
         }
@@ -300,7 +303,7 @@ class ShakaDemoCustom {
    * @private
    */
   loadAssetInfos_() {
-    const savedString = window.localStorage.getItem(ShakaDemoCustom.saveId_);
+    const savedString = window.localStorage.getItem(shakaDemo.Custom.saveId_);
     if (savedString) {
       const assets = JSON.parse(savedString);
       return new Set(assets.map((json) => {
@@ -317,7 +320,7 @@ class ShakaDemoCustom {
    * @private
    */
   saveAssetInfos_(assetInfos) {
-    const saveId = ShakaDemoCustom.saveId_;
+    const saveId = shakaDemo.Custom.saveId_;
     const assets = Array.from(assetInfos);
     window.localStorage.setItem(saveId, JSON.stringify(assets));
   }
@@ -352,12 +355,13 @@ class ShakaDemoCustom {
 
   /**
    * @param {!ShakaDemoAssetInfo} asset
-   * @return {!AssetCard}
+   * @return {!shakaDemo.AssetCard}
    * @private
    */
   createAssetCardFor_(asset) {
     const savedList = this.savedList_;
-    return new AssetCard(savedList, asset, /* isFeatured = */ false, (c) => {
+    const isFeatured = false;
+    return new shakaDemo.AssetCard(savedList, asset, isFeatured, (c) => {
       c.addButton('Play', () => {
         shakaDemoMain.loadAsset(asset);
         this.updateSelected_();
@@ -417,7 +421,7 @@ class ShakaDemoCustom {
       this.updateSelected_();
     }
   }
-}
+};
 
 
 /**
@@ -425,7 +429,7 @@ class ShakaDemoCustom {
  * custom assets.
  * @const {string}
  */
-ShakaDemoCustom.saveId_ = 'shakaPlayerDemoSavedAssets';
+shakaDemo.Custom.saveId_ = 'shakaPlayerDemoSavedAssets';
 
 
-document.addEventListener('shaka-main-loaded', ShakaDemoCustom.init);
+document.addEventListener('shaka-main-loaded', shakaDemo.Custom.init);
