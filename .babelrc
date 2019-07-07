@@ -5,6 +5,7 @@
     ]
   ],
   "presets": [
-    "babel-preset-expo"
+    "babel-preset-expo",
+    "module:react-native-dotenv"
   ]
 }
