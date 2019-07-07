@@ -4,7 +4,6 @@ import Meteor from 'react-native-meteor';
 import { Provider } from 'react-redux';
 
 import { PubNubProvider } from './Components/PubNubContext';
-import settings from './Config/settings';
 import Theme, { colors, ThemeProvider } from './Config/Theme';
 import RootNavigator from './navigators/RootNavigator';
 import Store from './redux';

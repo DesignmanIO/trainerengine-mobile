@@ -6,7 +6,6 @@ import PubNub from 'pubnub';
 import Meteor from 'react-native-meteor';
 
 import {PUBNUB_PUBLISH_KEY, PUBNUB_SUBSCRIBE_KEY} from 'react-native-dotenv';
-import settings from './Config/settings';
 import { fonts, images } from './assets';
 
 export default async function startup() {
