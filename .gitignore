@@ -1,6 +1,6 @@
 .env
 
-./node_modules/*
+node_modules/*
 .expo/*
 npm-debug.*
 /.blackbox/pubring.gpg~
