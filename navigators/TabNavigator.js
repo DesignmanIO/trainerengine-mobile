@@ -1,10 +1,11 @@
-import { createBottomTabNavigator } from 'react-navigation';
+import React from 'react';
+import { createBottomTabNavigator, BottomTabBar } from 'react-navigation';
 
 import { More, Tasks, Messages } from '../Views';
 import { colors } from '../Config/Theme';
 import Store from '../redux';
 
-const MainNavigator = createBottomTabNavigator(
+const TabNavigator = createBottomTabNavigator(
   {
     Tasks,
     Messages,
@@ -24,4 +25,4 @@ const MainNavigator = createBottomTabNavigator(
   },
 );
 
-export default MainNavigator;
+export default TabNavigator;

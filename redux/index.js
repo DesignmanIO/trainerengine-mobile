@@ -28,7 +28,7 @@ const migrate = createMigrate(
       ...state,
     }),
   },
-  { debug: true }
+  { debug: true },
 );
 
 const Store = createStore(
@@ -49,4 +49,6 @@ const Store = createStore(
 const persister = persistStore(Store, () => Store.dispatch(reduxReady()));
 
 export default Store;
-export { persister, userActions, C };
+export {
+  persister, userActions, appActions, C,
+};

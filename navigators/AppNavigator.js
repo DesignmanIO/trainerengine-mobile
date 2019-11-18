@@ -4,11 +4,11 @@ import { View } from 'react-native';
 import { connect } from 'react-redux';
 
 import { navListener } from '../redux';
-import TabNavigator from './TabNavigator';
+import DrawerNavigator from './DrawerNavigator';
 
 const AppNavigator = createStackNavigator(
   {
-    Home: { screen: TabNavigator },
+    Home: DrawerNavigator,
   },
   {
     mode: 'modal',

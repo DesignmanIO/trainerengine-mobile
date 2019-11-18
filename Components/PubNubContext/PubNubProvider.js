@@ -3,8 +3,8 @@ import Meteor, { withTracker } from 'react-native-meteor';
 
 import PubNubContext from './PubNubContext';
 
-const PubNubProvider = ({ user, children, pubNub }) => (
-  <PubNubContext.Provider value={pubNub}>{children}</PubNubContext.Provider>
+const PubNubProvider = ({ user, children, pubnub }) => (
+  <PubNubContext.Provider value={pubnub}>{children}</PubNubContext.Provider>
 );
 
 export default withTracker(() => ({ user: Meteor.user() }))(PubNubProvider);

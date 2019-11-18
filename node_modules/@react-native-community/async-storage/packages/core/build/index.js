@@ -1,0 +1,27 @@
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _AsyncStorage = _interopRequireDefault(require("./AsyncStorage"));
+
+var _defaults = require("./defaults");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+class AsyncStorageFactory {
+  constructor() {
+    throw new Error("[AsyncStorage] AsyncStorageFactory must not be instantiated.\nInstead, use static functions, like 'create' to get AsyncStorage instance.");
+  }
+
+  static create(storage, opts = _defaults.factoryOptions) {
+    return new _AsyncStorage.default(storage, opts);
+  }
+
+}
+
+var _default = AsyncStorageFactory;
+exports.default = _default;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uL3NyYy9pbmRleC50cyJdLCJuYW1lcyI6WyJBc3luY1N0b3JhZ2VGYWN0b3J5IiwiY29uc3RydWN0b3IiLCJFcnJvciIsImNyZWF0ZSIsInN0b3JhZ2UiLCJvcHRzIiwiZmFjdG9yeU9wdGlvbnMiLCJBc3luY1N0b3JhZ2UiXSwibWFwcGluZ3MiOiI7Ozs7Ozs7QUFBQTs7QUFDQTs7OztBQUdBLE1BQU1BLG1CQUFOLENBQTBCO0FBQ3hCQyxFQUFBQSxXQUFXLEdBQUc7QUFDWixVQUFNLElBQUlDLEtBQUosQ0FDSiwwSUFESSxDQUFOO0FBR0Q7O0FBRUQsU0FBT0MsTUFBUCxDQUNFQyxPQURGLEVBRUVDLElBQW9CLEdBQUdDLHdCQUZ6QixFQUd3QztBQUN0QyxXQUFPLElBQUlDLHFCQUFKLENBQWlCSCxPQUFqQixFQUEwQkMsSUFBMUIsQ0FBUDtBQUNEOztBQVp1Qjs7ZUFlWEwsbUIiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgQXN5bmNTdG9yYWdlIGZyb20gJy4vQXN5bmNTdG9yYWdlJztcbmltcG9ydCB7ZmFjdG9yeU9wdGlvbnN9IGZyb20gJy4vZGVmYXVsdHMnO1xuaW1wb3J0IHtJU3RvcmFnZUJhY2tlbmQsIEZhY3RvcnlPcHRpb25zLCBTdG9yYWdlTW9kZWx9IGZyb20gJy4uL3R5cGVzJztcblxuY2xhc3MgQXN5bmNTdG9yYWdlRmFjdG9yeSB7XG4gIGNvbnN0cnVjdG9yKCkge1xuICAgIHRocm93IG5ldyBFcnJvcihcbiAgICAgIFwiW0FzeW5jU3RvcmFnZV0gQXN5bmNTdG9yYWdlRmFjdG9yeSBtdXN0IG5vdCBiZSBpbnN0YW50aWF0ZWQuXFxuSW5zdGVhZCwgdXNlIHN0YXRpYyBmdW5jdGlvbnMsIGxpa2UgJ2NyZWF0ZScgdG8gZ2V0IEFzeW5jU3RvcmFnZSBpbnN0YW5jZS5cIixcbiAgICApO1xuICB9XG5cbiAgc3RhdGljIGNyZWF0ZTxTVFIgZXh0ZW5kcyBJU3RvcmFnZUJhY2tlbmQ+KFxuICAgIHN0b3JhZ2U6IFNUUixcbiAgICBvcHRzOiBGYWN0b3J5T3B0aW9ucyA9IGZhY3RvcnlPcHRpb25zLFxuICApOiBBc3luY1N0b3JhZ2U8U1RSLCBTdG9yYWdlTW9kZWw8U1RSPj4ge1xuICAgIHJldHVybiBuZXcgQXN5bmNTdG9yYWdlKHN0b3JhZ2UsIG9wdHMpO1xuICB9XG59XG5cbmV4cG9ydCBkZWZhdWx0IEFzeW5jU3RvcmFnZUZhY3Rvcnk7XG4iXX0=

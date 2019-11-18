@@ -1,9 +1,14 @@
 import React, { Component } from 'react';
-import { GiftedChat, Bubble } from 'react-native-gifted-chat';
+import {
+  GiftedChat, Bubble, InputToolbar, Send,
+} from 'react-native-gifted-chat';
 import Icon from '@expo/vector-icons/AntDesign';
+import FeatherIcon from '@expo/vector-icons/Feather';
 import Meteor, { withTracker } from 'react-native-meteor';
-import { View } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
 import hoistStatics from 'hoist-non-react-statics';
+import withPubNub from '../../Components/PubNubContext';
+import { withTheme } from '../../Config/Theme';
 
 class Messages extends Component {
   static navigationOptions = {
@@ -35,28 +40,60 @@ class Messages extends Component {
       ],
     });
   }
+
   onSend(messages = []) {
-    this.setState(previousState => {
-      return {
-        messages: GiftedChat.append(previousState.messages, messages),
-      };
+    const { publish } = this.props;
+    this.setState(previousState => ({
+      messages: GiftedChat.append(previousState.messages, messages),
+    }), () => {
+      console.log('onSend', messages[0]);
+      // publish(
+      //   {channel: 'asdf', message: messages[0]},
+      //   (status, result) => console.log(status, result)
+      // );
     });
   }
+
   render() {
-    const { style, messages, messagesHandle } = this.props;
-    // return <View />;
-    console.log(messages, messagesHandle.ready());
+    const {
+      style, messages, publish, user, theme: { icon, align },
+    } = this.props;
     return (
       <GiftedChat
-        messages={messages.map(message => ({
-          text: message.message,
-          ...message,
-        }))}
+        messages={this.state.messages}
         onSend={this.onSend}
-        user={{ _id: 1 }}
+        user={user}
+        renderSend={props => (
+          <Send
+            {...props}
+            containerStyle={[
+              align.vertical,
+              align.middle,
+              { height: '100%', width: 60 },
+            ]}
+          >
+            <FeatherIcon
+              name="send"
+              style={[icon, { fontSize: 20, lineHeight: 20, paddingTop: 0 }]}
+            />
+          </Send>
+        )}
+        renderInputToolbar={props => (
+          <InputToolbar
+            {...props}
+            composerHeight={60}
+            // textInputStyle={[input]}
+          />
+        )}
+        bottomOffset={160}
+        minInputToolbarHeight={80}
         renderBubble={props => {
-          // console.log('props', props);
-          return <Bubble {...props} />;
+          console.log('Bubble props', props.currentMessage);
+          return (
+            <Bubble
+              {...props}
+            />
+          );
         }}
       />
     );
@@ -64,15 +101,17 @@ class Messages extends Component {
 }
 
 export default hoistStatics(
-  withTracker(() => {
-    const messagesHandle = Meteor.subscribe('myMessages');
-    const myDataHandle = Meteor.subscribe('myData');
-    const messages = Meteor.collection('messages').find();
-    return {
-      messagesHandle,
-      messages,
-      myDataHandle,
-    };
-  })(Messages),
+  withTheme(
+    withPubNub({ subscribe: { channels: ['asdf'] } })(
+      withTracker(() => {
+        const myDataHandle = Meteor.subscribe('myData');
+        const user = Meteor.user();
+        return {
+          user,
+          myDataHandle,
+        };
+      })(Messages),
+    ),
+  ),
   Messages,
 );

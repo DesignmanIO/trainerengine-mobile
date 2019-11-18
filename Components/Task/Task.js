@@ -7,7 +7,9 @@ import Animated, { Easing } from 'react-native-reanimated';
 
 import useTheme, { colors, withTheme } from '../../Config/Theme';
 
-const { event, interpolate, State, call, debug, multiply } = Animated;
+const {
+  event, interpolate, State, call, debug, multiply,
+} = Animated;
 
 @withTheme
 class Task extends Component {
@@ -48,7 +50,9 @@ class Task extends Component {
       task: { status, name, ...rest },
       theme,
     } = this.props;
-    const { swipeout, text, align, position, flex, constants, padding, margin } = theme;
+    const {
+      swipeout, text, align, position, flex, constants, padding, margin,
+    } = theme;
     return (
       <Animated.View
         style={{

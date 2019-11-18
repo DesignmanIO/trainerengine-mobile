@@ -4,6 +4,6 @@ import colors from './colors';
 import navigationOptions from './navigationOptions';
 
 export {
-  colors, navigationOptions, ThemeContext, ThemeProvider, theme, withTheme
+  colors, navigationOptions, ThemeContext, ThemeProvider, theme, withTheme,
 };
 export default useTheme;

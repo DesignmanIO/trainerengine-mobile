@@ -4,7 +4,7 @@ import useTheme from '../Config/Theme';
 
 const Text = ({ style, ...props }) => {
   const { text: { defaultStyle } } = useTheme();
-  return <RNText style={[ defaultStyle, style ]} {...props} />;
+  return <RNText style={[defaultStyle, style]} {...props} />;
 };
 
 export default Text;

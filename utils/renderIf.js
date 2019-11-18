@@ -18,7 +18,7 @@ const multi = () => {
   }
 
   function ifCondition(condition) {
-    return (elemOrThunk) => {
+    return elemOrThunk => {
       cases.push({ condition, elemOrThunk });
       return ifConditionApi;
     };

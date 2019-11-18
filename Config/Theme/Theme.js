@@ -17,15 +17,46 @@ const getTheme = ({ dark }) => ({
     deviceY: Dimensions.get('window').height,
   },
   button: {
-    defaultStyle: {
-      paddingTop: spacing.sm * 1.5,
-      paddingBottom: spacing.sm,
-      paddingHorizontal: spacing.md,
-      borderRadius: 60,
-      borderWidth: 1,
-      borderColor: colors.subtleText,
-      alignItems: 'center',
-      justifyContent: 'center',
+    button: {
+      defaultStyle: {
+        paddingTop: spacing.sm * 1.5,
+        paddingBottom: spacing.sm,
+        paddingHorizontal: spacing.md,
+        borderRadius: 60,
+        borderWidth: 1,
+        borderColor: colors.subtleText,
+        alignItems: 'center',
+        justifyContent: 'center',
+      },
+      primary: {
+        backgroundColor: colors.blue,
+        borderColor: colors.blue,
+      },
+      secondary: {
+        borderColor: colors.blue,
+      },
+      blank: {
+        backgroundColor: 'transparent',
+        borderColor: 'transparent',
+      },
+      row: {
+        backgroundColor: 'transparent',
+        borderColor: 'transparent',
+        alignItems: 'flex-start',
+        paddingHorizontal: 0,
+      },
+    },
+    text: {
+      primary: {
+        color: 'white',
+      },
+      secondary: {
+        color: colors.blue,
+      },
+      blank: {},
+      row: {
+        paddingHorizontal: 0,
+      },
     },
     // text: { verticalAlign: 'center' },
   },
@@ -51,6 +82,12 @@ const getTheme = ({ dark }) => ({
     caption: { fontSize: 12, lineHeight: 12, color: colors.subtleText },
     center: { textAlign: 'center' },
     strikethrough: { textDecorationLine: 'line-through' },
+  },
+  icon: {
+    fontSize: 35,
+    alignSelf: 'center',
+    color: colors.blue,
+    paddingTop: 35 / 2,
   },
   padding: {
     ...getSpacingObj('padding'),

@@ -8,5 +8,5 @@ export default {
   'Montserrat Light': require('./Montserrat-Light.ttf'),
   'Montserrat Regular': require('./Montserrat-Regular.ttf'),
   'Montserrat Bold': require('./Montserrat-Bold.ttf'),
-  'MPlus1': require('./MPLUS1p-Regular.ttf'),
+  MPlus1: require('./MPLUS1p-Regular.ttf'),
 };

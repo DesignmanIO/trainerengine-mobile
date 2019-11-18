@@ -39,8 +39,8 @@
 /* These control the color and size of the various pieces. */
 @thumb-color: white;
 @track-default-color: white;
-@thumb-size: 10px;
-@track-height: 3.4px;
+@thumb-size: 12px;
+@track-height: 4px;
 
 /* The range container is the div that contains a range element.
  * This div will act as a virtual track to allow us to style the track space.
@@ -157,9 +157,11 @@
   }
 }
 
-.shaka-volume-bar-container {
+.shaka-range-container {
   .range-container();
+}
 
+.shaka-volume-bar-container {
   width: 100px;
 
   /* Hide volume slider on mobile-sized screens. */
@@ -169,16 +171,10 @@
 }
 
 .shaka-seek-bar-container {
-  .range-container();
-
   /* TODO: Document why! */
   width: 96.5%;
 }
 
-.shaka-seek-bar {
-  .range-element();
-}
-
-.shaka-volume-bar {
+.shaka-range-element {
   .range-element();
 }

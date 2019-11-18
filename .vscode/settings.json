@@ -1,3 +1,31 @@
 {
-  "git.ignoreLimitWarning": true
+  "editor.foldingStrategy": "indentation",
+  "editor.formatOnSave": true,
+  "git.ignoreLimitWarning": true,
+  "LineCount.excludes": [
+    "**/ios/**",
+    "**/android/**",
+    "**/.idea/**",
+    "**/.gradle/**",
+    "**/.expo/**",
+    "**/.expo-source/**",
+    "**/.vscode/**",
+    "**/.tmp/**",
+    "**/>/**",
+    "**/npm/**",
+    "**/package-lock.json",
+    "**/node_modules/**"
+  ],
+  "javascript.preferences.importModuleSpecifier": "relative",
+  "java.dependency.packagePresentation": "hierarchical",
+  "search.usePCRE2": true,
+  "files.exclude": {
+    "**/.classpath": true,
+    "**/.project": true,
+    "**/.settings": true,
+    "**/.factorypath": true
+  },
+  "java.configuration.updateBuildConfiguration": "disabled",
+  "prettier.singleQuote": true,
+  "prettier.trailingComma": "all"
 }

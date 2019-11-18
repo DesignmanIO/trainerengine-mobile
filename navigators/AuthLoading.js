@@ -14,7 +14,10 @@ const AuthLoading = ({
 
   if (!loggingIn) {
     console.log('done logging in', userId);
-    navigation.navigate(userId ? 'AppNavigator' : 'AuthNavigator');
+    setTimeout(() => {
+      navigation.navigate(userId ? 'AppNavigator' : 'AuthNavigator');
+    });
+    return null;
   }
 
   return (

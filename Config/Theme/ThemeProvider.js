@@ -13,7 +13,7 @@ const useTheme = () => useContext(ThemeContext);
 const withTheme = WrappedComponent => hoistStatics(
   props => (
     <ThemeContext.Consumer>
-      {value => <WrappedComponent {...props} theme={value} />}
+      {theme => <WrappedComponent {...props} theme={theme} />}
     </ThemeContext.Consumer>
   ),
   WrappedComponent,

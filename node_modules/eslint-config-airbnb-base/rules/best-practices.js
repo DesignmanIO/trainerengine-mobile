@@ -44,8 +44,7 @@ module.exports = {
 
     // enforce a maximum number of classes per file
     // https://eslint.org/docs/rules/max-classes-per-file
-    // TODO: semver-major (eslint 5): enable
-    'max-classes-per-file': ['off', 1],
+    'max-classes-per-file': ['error', 1],
 
     // disallow the use of alert, confirm, and prompt
     'no-alert': 'warn',
@@ -249,9 +248,8 @@ module.exports = {
 
     // disallow self assignment
     // https://eslint.org/docs/rules/no-self-assign
-    // TODO: semver-major: props -> true
     'no-self-assign': ['error', {
-      props: false,
+      props: true,
     }],
 
     // disallow comparisons where both sides are exactly the same
@@ -283,8 +281,7 @@ module.exports = {
 
     // Disallow unnecessary catch clauses
     // https://eslint.org/docs/rules/no-useless-catch
-    // TODO: enable, semver-major
-    'no-useless-catch': 'off',
+    'no-useless-catch': 'error',
 
     // disallow useless string concatenation
     // https://eslint.org/docs/rules/no-useless-concat

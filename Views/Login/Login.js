@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Image, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 
-import { Text, TextInput } from '../../Components';
+import { Text, TextInput, Button } from '../../Components';
 import { renderIf } from '../../utils';
 import { userActions } from '../../redux';
 import images from '../../assets/images';
@@ -46,9 +46,13 @@ class Login extends Component {
   }
 
   render() {
-    const { email, password, confirmPassword, createAccount, hidePassword } = this.state;
     const {
-      theme: { image, margin, align, flex, button },
+      email, password, confirmPassword, createAccount, hidePassword,
+    } = this.state;
+    const {
+      theme: {
+        image, margin, align, flex, button,
+      },
     } = this.props;
 
     return (
@@ -60,41 +64,50 @@ class Login extends Component {
             style={margin.bottom.sm}
             value={email}
             onChangeText={text => this.setState({ email: text })}
+            onSubmitEditing={() => this.password.focus()}
+            returnKeyType="next"
           />
           <TextInput
             placeholder="Password"
             style={margin.bottom.sm}
             value={password}
+            inputRef={c => this.password = c}
             onChangeText={text => this.setState({ password: text })}
+            onSubmitEditing={() => (createAccount ? this.confirmPassword.focus() : this.logIn())}
             secureTextEntry={hidePassword}
+            returnKeyType={createAccount ? 'next' : 'done'}
           />
           {renderIf.if(createAccount)(
             <TextInput
               placeholder="Confirm Password"
+              inputRef={c => this.confirmPassword = c}
               style={margin.bottom.sm}
               value={confirmPassword}
               onChangeText={text => this.setState({ confirmPassword: text })}
               secureTextEntry={hidePassword}
+              onSubmitEditing={this.createAccount}
+              returnKeyType="done"
             />,
           )()}
-          <TouchableOpacity onPress={() => this.setState({ hidePassword: !hidePassword })}>
-            <Text>{`${hidePassword ? 'Show' : 'Hide'} password`}</Text>
-          </TouchableOpacity>
+          <Button
+            onPress={() => this.setState({ hidePassword: !hidePassword })}
+            text={`${hidePassword ? 'Show' : 'Hide'} password`}
+            type="blank"
+          />
         </View>
         <View>
-          <TouchableOpacity
-            style={[button.defaultStyle, margin.bottom.sm]}
+          <Button
+            style={margin.bottom.sm}
             onPress={() => (createAccount ? this.createAccount() : this.logIn())}
-            styleName="sm-gutter-bottom"
-          >
-            <Text style={button.text}>{createAccount ? 'Create Account' : 'Log In'}</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
+            text={createAccount ? 'Create Account' : 'Log In'}
+            type="primary"
+          />
+          <Button
             style={[button.defaultStyle]}
             onPress={() => this.setState({ createAccount: !createAccount })}
-          >
-            <Text style={button.text}>{createAccount ? 'Or log in' : 'Or register'}</Text>
-          </TouchableOpacity>
+            text={createAccount ? 'Or log in' : 'Or register'}
+            type="secondary"
+          />
         </View>
       </View>
     );

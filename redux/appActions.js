@@ -6,4 +6,4 @@ const appActions = {
   },
 };
 
-export default appActions
+export default appActions;

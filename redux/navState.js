@@ -14,8 +14,7 @@ if (!AppNavigator) {
 }
 // End hack
 
-const initialState = Navigator.router.getStateForAction(Navigator.router.getActionForPathAndParams('Home'),
-);
+const initialState = Navigator.router.getStateForAction(Navigator.router.getActionForPathAndParams('Home'));
 
 export default (state = initialState, action) => {
   const nextState = Navigator.router.getStateForAction(action, state);

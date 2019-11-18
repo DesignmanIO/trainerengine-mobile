@@ -5,8 +5,8 @@ import { SectionList, Text } from 'react-native';
 import _ from 'lodash';
 
 // import { navigationOptions } from '../../Config/Theme';
-import Task from '../../Components/Task';
 import Meteor, { withTracker, MeteorListView } from 'react-native-meteor';
+import Task from '../../Components/Task';
 import { withTheme } from '../../Config/Theme';
 
 class Tasks extends Component {
@@ -37,7 +37,7 @@ class Tasks extends Component {
       if (statusIndex < 0) return [...arr, { title: task.status, data: [task] }];
       arr[statusIndex].data.push(task);
       return arr;
-    }, []).sort((s1, s2) => s1 > s2 ? 1 : -1);
+    }, []).sort((s1, s2) => (s1 > s2 ? 1 : -1));
     // console.log(this.props.tasks);
     return (
       <SectionList

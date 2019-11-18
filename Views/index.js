@@ -1,8 +1,9 @@
 import Login from './Login';
 import Tasks from './Tasks';
-import More from './More';
 import Messages from './Messages';
+import More from './More';
+import Account from './Account';
 
 export {
-  Login, Tasks, More, Messages,
+  Login, Tasks, Messages, More, Account,
 };

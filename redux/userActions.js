@@ -1,6 +1,7 @@
 import Meteor, { Accounts } from 'react-native-meteor';
 import { Alert } from 'react-native';
 
+import { NavigationService } from '../utils';
 import C from './actionTypes';
 
 const userActions = {
@@ -31,6 +32,9 @@ const userActions = {
     };
   },
   logOut() {
+    console.log('logOut');
+    Meteor.logout();
+    NavigationService.navigate('Login');
     return { type: C.SET_AUTHTOKEN, payload: '' };
   },
   setAuthToken(token = '') {
