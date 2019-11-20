@@ -10,11 +10,11 @@ import { databaseActions } from './utils';
 import {
   // ABLY_API_KEY as ablyKey,
   PUBNUB_PUBLISH_KEY as publishKey,
-  PUBNUB_SUBSCRIBE_KEY as subscribeKey,
+  PUBNUB_SUBSCRIBE_KEY as subscribeKey
 } from 'react-native-dotenv';
 
 import { fonts, images } from './assets';
-import dbDefinitions from './Config/dbDefinitions';
+import dbDefinitions from './database/databaseDefinitions';
 
 export default async function startup() {
   await Font.loadAsync(fonts);
@@ -26,7 +26,7 @@ export default async function startup() {
   database.transaction(
     tx => dbDefinitions(tx),
     err => console.log('db err', err),
-    res => console.log('db res', res),
+    res => console.log('db res', res)
   );
   database.actions = databaseActions(database);
 
