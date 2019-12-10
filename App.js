@@ -7,7 +7,7 @@ import { PubNubProvider } from 'pubnub-react';
 import { AblyProvider } from './Components/AblyContext';
 import Theme, { colors, ThemeProvider } from './Config/Theme';
 import RootNavigator from './navigators/RootNavigator';
-import Store from './redux';
+import store from './redux';
 import startup from './startup';
 // import { PubNubProvider } from './Components/PubNubContext';
 import { NavigationService } from './utils';
@@ -18,17 +18,16 @@ export default class App extends Component {
   constructor() {
     super();
 
-    this.ably = null;
+    this.pubnub = null;
 
     this.state = {
-      loaded: false,
+      loaded: false
     };
   }
 
   async componentDidMount() {
-    const { pubnub, database } = await startup();
+    const { pubnub } = await startup();
     this.pubnub = pubnub;
-    this.database = database;
     this.setState({ loaded: true });
   }
 
@@ -36,13 +35,11 @@ export default class App extends Component {
     const { loaded } = this.state;
     if (!loaded) return <AppLoading />;
     return (
-      <Provider store={Store}>
+      <Provider store={store}>
         <PubNubProvider client={this.pubnub}>
-          <DatabaseProvider database={this.database}>
-            <ThemeProvider>
-              <RootNavigator ref={c => NavigationService.setTopLevelNavigator(c)} />
-            </ThemeProvider>
-          </DatabaseProvider>
+          <ThemeProvider>
+            <RootNavigator ref={c => NavigationService.setTopLevelNavigator(c)} />
+          </ThemeProvider>
         </PubNubProvider>
       </Provider>
     );

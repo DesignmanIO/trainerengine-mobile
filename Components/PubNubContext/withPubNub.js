@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import hoistStatics from 'hoist-non-react-statics';
-
-import PubNubContext from './PubNubContext';
+import { PubNubConsumer } from 'pubnub-react';
 
 const PubNubComponent = ({ pubnub, Component, subscribe, ...props }) => {
   const [messages, setMessages] = useState([]);
@@ -10,15 +9,15 @@ const PubNubComponent = ({ pubnub, Component, subscribe, ...props }) => {
     const listener = pubnub.addListener({
       status(status) {
         // what does this do?
-        console.log(status);
+        console.log({ status });
       },
       message(message) {
         addMessages([message]);
       },
       presence(presence) {
         // what does this do?
-        console.log(presence);
-      },
+        console.log({ presence });
+      }
     });
     pubnub.subscribe(subscribe);
     pubnub.removeListener(listener);
@@ -33,7 +32,7 @@ const PubNubComponent = ({ pubnub, Component, subscribe, ...props }) => {
 const withPubNub = ({ subscribe }) => WrappedComponent =>
   hoistStatics(
     props => (
-      <PubNubContext.Consumer>
+      <PubNubConsumer>
         {pubnub => (
           <PubNubComponent
             {...props}
@@ -42,9 +41,9 @@ const withPubNub = ({ subscribe }) => WrappedComponent =>
             subscribe={subscribe}
           />
         )}
-      </PubNubContext.Consumer>
+      </PubNubConsumer>
     ),
-    WrappedComponent,
+    WrappedComponent
   );
 
 export default withPubNub;

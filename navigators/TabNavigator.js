@@ -3,7 +3,7 @@ import { createBottomTabNavigator, BottomTabBar } from 'react-navigation';
 
 import { More, Tasks, Messages } from '../Views';
 import { colors } from '../Config/Theme';
-import Store from '../redux';
+import store from '../redux';
 
 const TabNavigator = createBottomTabNavigator(
   {

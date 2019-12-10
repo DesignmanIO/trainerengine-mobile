@@ -1,6 +1,17 @@
-const C = {
-  SET_AUTHTOKEN: 'SET_AUTHTOKEN',
-  READUXREADY: 'READUXREADY',
+const appTypes = { REDUXREADY: 'READUXREADY' };
+const userTypes = {
+  SET_AUTHTOKEN: 'SET_AUTHTOKEN'
+};
+const messageTypes = {
+  SEND_MESSAGE: 'SEND_MESSAGE',
+  SET_MESSAGES: 'SET_MESSAGES',
+  REMOVE_MESSAGE: 'REMOVE_MESSAGE'
 };
 
-export default C;
+const types = {
+  ...messageTypes,
+  ...appTypes,
+  ...userTypes
+};
+
+export default types;

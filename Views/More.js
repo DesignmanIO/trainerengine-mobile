@@ -5,14 +5,14 @@ import { connect } from 'react-redux';
 import Icon from '@expo/vector-icons/AntDesign';
 
 // import { navigationOptions } from '../../Config/Theme';
-import Store, { userActions } from '../redux';
+import store, { userActions } from '../redux';
 
 const More = View;
 
 More.navigationOptions = () => {
   console.log(
-    Store.getState().userState.authToken === 'asdf',
-    Store.getState().userState.authToken === 'asdfx',
+    store.getState().userState.authToken === 'asdf',
+    store.getState().userState.authToken === 'asdfx',
   );
   return {
     // ...navigationOptions,
@@ -21,7 +21,7 @@ More.navigationOptions = () => {
     tabBarOnPress({ navigation, defaultHandler }) {
       navigation.dispatch(DrawerActions.openDrawer());
     },
-    ...(Store.getState().userState.authToken === 'asdf'
+    ...(store.getState().userState.authToken === 'asdf'
       ? {
         tabBarButtonComponent: null,
       }

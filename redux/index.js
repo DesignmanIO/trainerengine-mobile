@@ -11,7 +11,7 @@ import thunkSubscribe from 'redux-thunk-subscribe';
 import appState from './appState';
 import userState from './userState';
 import userActions from './userActions';
-import appActions from './appActions';
+import appActions, { reduxReady } from './appActions';
 import C from './actionTypes';
 
 // encrypt stored state with hashed device ID
@@ -19,19 +19,19 @@ const encryptor = createEncryptor({
   secretKey: btoa(Constants.deviceId),
   onError(err) {
     console.warn(err);
-  },
+  }
 });
 
 const migrate = createMigrate(
   {
     0: state => ({
-      ...state,
-    }),
+      ...state
+    })
   },
-  { debug: true },
+  { debug: true }
 );
 
-const Store = createStore(
+const store = createStore(
   persistReducer(
     {
       key: 'root',
@@ -39,16 +39,14 @@ const Store = createStore(
       blacklist: ['appState'],
       transforms: [encryptor],
       version: 0,
-      stateReconciler: autoMergeLevel2,
+      stateReconciler: autoMergeLevel2
     },
-    combineReducers({ appState, userState }),
+    combineReducers({ appState, userState })
   ),
-  thunkSubscribe,
+  thunkSubscribe
 );
 
-const persister = persistStore(Store, () => Store.dispatch(reduxReady()));
+const persister = persistStore(store, null, () => store.dispatch(reduxReady()));
 
-export default Store;
-export {
-  persister, userActions, appActions, C,
-};
+export default store;
+export { persister, userActions, appActions, C };
