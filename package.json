@@ -21,7 +21,7 @@
     "hoist-non-react-statics": "^3.3.0",
     "install": "^0.13.0",
     "lodash": "^4.17.15",
-    "npm": "^6.10.2",
+    "npm": "^6.13.4",
     "proptypes": "^1.1.0",
     "pubnub": "^4.27.0",
     "pubnub-react": "^2.0.0-beta.4",
